@@ -36,7 +36,7 @@ public class mkGUI extends JFrame {
     File[] file5 = new File[URLs.length];
 
     String[] tempFileNames = new String[URLs.length];
-    static String[] sudjectNames = {"MeetEnd", "Kor", "Math", "Eng", "SinceB", "History", "PE", "Chin", "Music", "Moral", "Home", "Techno", "CEA", "SinceA", "Sports"};
+    static String[] subjectNames = {"MeetEnd", "Kor", "Math", "Eng", "SinceB", "History", "PE", "Chin", "Music", "Moral", "Home", "Techno", "CEA", "SinceA", "Sports"};
     String str;
 
     public mkGUI() throws ParserConfigurationException, IOException, SAXException {
