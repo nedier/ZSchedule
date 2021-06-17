@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
-import java.util.Arrays;
 
 public class mkGUI extends JFrame {
 
@@ -43,7 +42,6 @@ public class mkGUI extends JFrame {
         for (int i = 0; i < URLs.length; i++) {
             XMLManage.XMLReader(saveConfig.getPath(), URLs, i);
         }
-        System.out.println(Arrays.toString(URLs));
         for (int i = 0; i < tempFileNames.length; i++) {
             XMLManage.XMLReader(tempFileConfig.getPath(), tempFileNames, i);
             file5[i] = new File("C:\\Temp\\ZSchedule\\files\\" + tempFileNames[i]);
