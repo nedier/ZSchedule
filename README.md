@@ -1,2 +1,2 @@
-# ZSchedule-1
-it is making now
+# ZSchedule
+업데이트는 끝나지 않아요!
