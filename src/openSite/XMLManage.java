@@ -11,9 +11,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class XMLManage {
-    public static void XMLWriter(String path, String eleName, String[] nodeList, String[] contentNames, boolean AttAble, String AttValue) throws ParserConfigurationException, TransformerException {
+    public static void XMLWriter(File file, String eleName, String[] nodeList, String[] contentNames, boolean AttAble, String AttValue) throws ParserConfigurationException, TransformerException {
         if(nodeList.length == contentNames.length) {
-            File file = new File(path);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = factory.newDocumentBuilder();
             Document document = documentBuilder.newDocument();
@@ -21,6 +20,7 @@ public class XMLManage {
             for (int i = 0; i < nodeList.length; i++) {
                 Element ele = document.createElement(nodeList[i]);
                 ele.setTextContent(contentNames[i]);
+                System.out.println(contentNames[i]);
                 if(AttAble) {
                     ele.setAttribute("change", AttValue);
                 }
@@ -49,7 +49,6 @@ public class XMLManage {
                 e.printStackTrace();
             }
         }
-        
     }
 
     public static String ReadFile(NodeList children, int i, String[] arrays) {
@@ -66,11 +65,11 @@ public class XMLManage {
         if (node.getNodeType() == Node.ELEMENT_NODE) {
             Element ele = (Element) node;
             String content = ele.getTextContent();
+            arrays[i] = content;
             if(ele.getAttribute("change").equals("true") || ele.getAttribute("change").equals("false")) {
                 changeAble = ele.getAttribute("change");
                 return changeAble;
             }
-            arrays[i] = content;
         }
         return null;
     }

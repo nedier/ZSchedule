@@ -24,7 +24,6 @@ public class FileChooser extends JPanel {
             for (int i = 0; i < URLs.length; i++) {
                 changeAble[i] = Boolean.parseBoolean(XMLManage.XMLReader(file.getPath(), URLs, i));
             }
-            XMLManage.XMLWriter(mkGUI.saveConfig.getPath(), "saveConfig", mkGUI.subjectNames, mkGUI.URLs, false, null);
         }
     }
 }
