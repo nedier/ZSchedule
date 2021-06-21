@@ -89,7 +89,7 @@ public class mkGUI extends JFrame {
                 manyIF.desktopView("https://rang.edunet.net/main.do");
             } else {
                 try {
-                    XMLManage.XMLWriter(saveConfig, "saveConfig", subjectNames, URLs, false, null);
+                    XMLManage.XMLWriter(saveConfig, "saveConfig", subjectNames, URLs, true, changeAble);
                 } catch (ParserConfigurationException | TransformerException e) {
                     e.printStackTrace();
                 }
