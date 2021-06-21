@@ -120,7 +120,6 @@ public class manyIF extends JOptionPane {
     }
     static void manyIFToday(boolean b, int i, String[] URLs) {
         if (b) {
-            System.out.println("com");
             switch (i) {
                 case 0 -> {
                     if(temp1.date == 1 || temp1.date == 2 || temp1.date == 3 || temp1.date == 4 || temp1.date == 5) {
