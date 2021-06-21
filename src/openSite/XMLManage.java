@@ -20,7 +20,6 @@ public class XMLManage {
             for (int i = 0; i < nodeList.length; i++) {
                 Element ele = document.createElement(nodeList[i]);
                 ele.setTextContent(contentNames[i]);
-                System.out.println(contentNames[i]);
                 if(AttAble) {
                     ele.setAttribute("change", AttValue);
                 }

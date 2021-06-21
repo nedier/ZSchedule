@@ -79,7 +79,7 @@ public class manyIF extends JOptionPane {
                 }
             }
             case 4 -> {
-                if(now > 1440 || now < 845) {
+                if(now < 845 || now > 1440) {
                     desktopView(URLs[0]);
                 } else if(now < 930) {
                     desktopView(URLs[6]);
@@ -200,7 +200,6 @@ public class manyIF extends JOptionPane {
             }
         }
     }
-
     public static void nowClass(JLabel jL) {
         if(!(temp1.date == 0 ||temp1.date == 6) && now < 845 || now > 1535) {
             jL.setText("조회 종례");

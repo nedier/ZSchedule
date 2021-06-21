@@ -39,15 +39,12 @@ public class mkGUI extends JFrame {
     String str;
 
     public mkGUI() throws ParserConfigurationException, IOException, SAXException {
-        for (int i = 0; i < URLs.length; i++) {
-            XMLManage.XMLReader(saveConfig.getPath(), URLs, i);
-        }
         for (int i = 0; i < tempFileNames.length; i++) {
+            XMLManage.XMLReader(saveConfig.getPath(), URLs, i);
             XMLManage.XMLReader(tempFileConfig.getPath(), tempFileNames, i);
             file5[i] = new File("C:\\Temp\\ZSchedule\\files\\" + tempFileNames[i]);
         }
         str = fileRead(file);
-
         if(!str.equals(Integer.toString(temp1.date))) {
             for (int i = 0; i < changeAble.length; i++) {
                 if (file5[i].exists()) {
@@ -97,7 +94,11 @@ public class mkGUI extends JFrame {
             JOptionPane.showMessageDialog(null, showMsg, "Notification", JOptionPane.ERROR_MESSAGE);
         }else {
             String index = JOptionPane.showInputDialog(showMsg);
-            BufferWriteTry(index, target);
+            if (index == null) {
+                manyIF.desktopView("https://rang.edunet.net/main.do");
+            } else {
+                BufferWriteTry(index, target);
+            }
         }
     }
 
