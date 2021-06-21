@@ -2,7 +2,6 @@ package openSite;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -116,85 +115,86 @@ public class manyIF extends JOptionPane {
                     System.out.println("BUG");
                 }
             }
-            default -> mkJOptionPane("휴일이거나 버그", null);
+            default -> mkJOptionPane("휴일이거나 버그", null, 0);
         }
     }
-    static void manyIFToday(boolean b, int i, File[] file) {
+    static void manyIFToday(boolean b, int i, String[] URLs) {
         if (b) {
+            System.out.println("com");
             switch (i) {
                 case 0 -> {
                     if(temp1.date == 1 || temp1.date == 2 || temp1.date == 3 || temp1.date == 4 || temp1.date == 5) {
-                        mkJOptionPane("오늘 수업에 조종례가 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 조종례가 들어있습니다 \n 링크를 입력해 주세요", URLs, 0);
                     }
                 }
                 case 1 -> {
                     if(temp1.date == 1 || temp1.date == 2 || temp1.date == 3 || temp1.date == 5) {
-                        mkJOptionPane("오늘 수업에 국어가 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 국어가 들어있습니다 \n 링크를 입력해 주세요", URLs, 1);
                     }
                 }
                 case 2 -> {
                     if(temp1.date == 1 || temp1.date == 2 || temp1.date == 3 || temp1.date == 4) {
-                        mkJOptionPane("오늘 수업에 수학이 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 수학이 들어있습니다 \n 링크를 입력해 주세요", URLs, 2);
                     }
                 }
                 case 3 -> {
                     if(temp1.date == 2 || temp1.date == 3 || temp1.date == 4) {
-                        mkJOptionPane("오늘 수업에 영어가 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 영어가 들어있습니다 \n 링크를 입력해 주세요", URLs, 3);
                     }
                 }
                 case 4 -> {
                     if(temp1.date == 1) {
-                        mkJOptionPane("오늘 수업에 과학 B 가 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 과학 B 가 들어있습니다 \n 링크를 입력해 주세요", URLs, 4);
                     }
                 }
                 case 5 -> {
                     if(temp1.date == 1 || temp1.date == 2 || temp1.date == 4) {
-                        mkJOptionPane("오늘 수업에 역사가 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 역사가 들어있습니다 \n 링크를 입력해 주세요", URLs, 5);
                     }
                 }
                 case 6 -> {
                     if(temp1.date == 2 || temp1.date == 3 || temp1.date == 4 || temp1.date == 5) {
-                        mkJOptionPane("오늘 수업에 체육이 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 체육이 들어있습니다 \n 링크를 입력해 주세요", URLs, 6);
                     }
                 }
                 case 7 -> {
                     if(temp1.date == 1 || temp1.date == 4) {
-                        mkJOptionPane("오늘 수업에 한문이 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 한문이 들어있습니다 \n 링크를 입력해 주세요", URLs, 7);
                     }
                 }
                 case 8 -> {
                     if(temp1.date == 3 || temp1.date == 5) {
-                        mkJOptionPane("오늘 수업에 음악 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 음악 들어있습니다 \n 링크를 입력해 주세요", URLs, 8);
                     }
                 }
                 case 9 -> {
                     if(temp1.date == 3 ||temp1.date == 5) {
-                        mkJOptionPane("오늘 수업에 도덕이 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 도덕이 들어있습니다 \n 링크를 입력해 주세요", URLs, 9);
                     }
                 }
                 case 10 -> {
                     if(temp1.date == 1 || temp1.date == 2) {
-                        mkJOptionPane("오늘 수업에 가정이 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 가정이 들어있습니다 \n 링크를 입력해 주세요", URLs, 10);
                     }
                 }
                 case 11 -> {
                     if(temp1.date == 2 || temp1.date == 3 || temp1.date == 4 || temp1.date == 5) {
-                        mkJOptionPane("오늘 수업에 기술이 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 기술이 들어있습니다 \n 링크를 입력해 주세요", URLs, 11);
                     }
                 }
                 case 12 -> {
                     if(temp1.date == 2) {
-                        mkJOptionPane("오늘 수업에 창체가 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 창체가 들어있습니다 \n 링크를 입력해 주세요", URLs, 12);
                     }
                 }
                 case 13 -> {
                     if(temp1.date == 3 || temp1.date == 5) {
-                        mkJOptionPane("오늘 수업에 과학 A 가 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 과학 A 가 들어있습니다 \n 링크를 입력해 주세요", URLs, 13);
                     }
                 }
                 case 14 -> {
                     if(temp1.date == 3) {
-                        mkJOptionPane("오늘 수업에 스포츠가 들어있습니다 \n 링크를 입력해 주세요", file[i]);
+                        mkJOptionPane("오늘 수업에 스포츠가 들어있습니다 \n 링크를 입력해 주세요", URLs, 14);
                     }
                 }
             }

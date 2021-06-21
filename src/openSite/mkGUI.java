@@ -24,34 +24,24 @@ public class mkGUI extends JFrame {
     static JButton uploadButton = new JButton(uploadPNG);
     static JToolBar bar = new JToolBar();
 
-
     static String[] URLs = new String[15];
     static boolean[] changeAble = new boolean[URLs.length];
 
-    File file = new File("C:\\Temp\\ZSchedule\\files\\clearDay.txt");
+    static File file = new File("C:\\Temp\\ZSchedule\\files\\clearDay.txt");
     static File saveConfig = new File("C:\\Temp\\ZSchedule\\files\\saveConfig.xml");
-    File tempFileConfig = new File("C:\\Temp\\ZSchedule\\files\\tempFileConfig.xml");
 
-    File[] file5 = new File[URLs.length];
-
-    String[] tempFileNames = new String[URLs.length];
     static String[] subjectNames = {"MeetEnd", "Kor", "Math", "Eng", "SinceB", "History", "PE", "Chin", "Music", "Moral", "Home", "Techno", "CEA", "SinceA", "Sports"};
     String str;
 
     public mkGUI() throws ParserConfigurationException, IOException, SAXException {
-        for (int i = 0; i < tempFileNames.length; i++) {
+        for (int i = 0; i < URLs.length; i++) {
+            changeAble[i] = Boolean.parseBoolean(XMLManage.XMLReader(saveConfig.getPath(), URLs, i));
             XMLManage.XMLReader(saveConfig.getPath(), URLs, i);
-            XMLManage.XMLReader(tempFileConfig.getPath(), tempFileNames, i);
-            file5[i] = new File("C:\\Temp\\ZSchedule\\files\\" + tempFileNames[i]);
         }
         str = fileRead(file);
         if(!str.equals(Integer.toString(temp1.date))) {
             for (int i = 0; i < changeAble.length; i++) {
-                if (file5[i].exists()) {
-                    manyIF.manyIFToday(changeAble[i], i, file5);
-                } else {
-                    mkJOptionPane("File names are not same \n Please reinstall", null);
-                }
+                manyIF.manyIFToday(changeAble[i], i, URLs);
             }
             BufferWriteTry(Integer.toString(temp1.date), file);
         }
@@ -89,15 +79,20 @@ public class mkGUI extends JFrame {
         }
     }
 
-    public static void mkJOptionPane(String showMsg, File target) {
+    public static void mkJOptionPane(String showMsg, String[] target, int i) {
         if(target == null) {
             JOptionPane.showMessageDialog(null, showMsg, "Notification", JOptionPane.ERROR_MESSAGE);
         }else {
             String index = JOptionPane.showInputDialog(showMsg);
+            URLs[i] = index;
             if (index == null) {
                 manyIF.desktopView("https://rang.edunet.net/main.do");
             } else {
-                BufferWriteTry(index, target);
+                try {
+                    XMLManage.XMLWriter(saveConfig, "saveConfig", subjectNames, URLs, false, null);
+                } catch (ParserConfigurationException | TransformerException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -155,7 +150,7 @@ public class mkGUI extends JFrame {
             } else if(e.getSource() == uploadButton) {
                 try {
                     new FileChooser(URLs, changeAble);
-                    XMLManage.XMLWriter(saveConfig, "saveConfig", subjectNames, URLs, false, null);
+                    XMLManage.XMLWriter(saveConfig, "saveConfig", subjectNames, URLs, true, changeAble);
                 } catch (ParserConfigurationException | SAXException | IOException | TransformerException e1) {
                     e1.printStackTrace();
                 }

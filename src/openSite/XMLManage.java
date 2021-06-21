@@ -11,17 +11,18 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class XMLManage {
-    public static void XMLWriter(File file, String eleName, String[] nodeList, String[] contentNames, boolean AttAble, String AttValue) throws ParserConfigurationException, TransformerException {
+    public static void XMLWriter(File file, String eleName, String[] nodeList, String[] contentNames, boolean AttAble, boolean[] AttValue) throws ParserConfigurationException, TransformerException {
         if(nodeList.length == contentNames.length) {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = factory.newDocumentBuilder();
             Document document = documentBuilder.newDocument();
             Element root = document.createElement(eleName);
+
             for (int i = 0; i < nodeList.length; i++) {
                 Element ele = document.createElement(nodeList[i]);
                 ele.setTextContent(contentNames[i]);
                 if(AttAble) {
-                    ele.setAttribute("change", AttValue);
+                    ele.setAttribute("change", String.valueOf(AttValue[i]));
                 }
                 root.appendChild(ele);
             }
