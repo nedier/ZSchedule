@@ -87,6 +87,7 @@ public class mkGUI extends JFrame {
             URLs[i] = index;
             if (index == null) {
                 manyIF.desktopView("https://rang.edunet.net/main.do");
+                mkJOptionPane(showMsg, target, i);
             } else {
                 try {
                     XMLManage.XMLWriter(saveConfig, "saveConfig", subjectNames, URLs, true, changeAble);
