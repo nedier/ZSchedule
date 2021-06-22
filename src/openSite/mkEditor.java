@@ -16,7 +16,7 @@ public class mkEditor {
         boolean[] changeAble = new boolean[15];
         JPanel headingPanel = new JPanel();
         JPanel panel = new JPanel(new GridBagLayout());
-        GridBagConstraints constr = new GridBagConstraints();
+        GridBagConstraints construe = new GridBagConstraints();
         String[] korSubjectNames = {"조종례", "국어", "수학", "영어", "과학B", "역사", "체육", "한문", "음악", "도덕", "가정", "기술", "창체", "과학 A", "스포츠"};
         JLabel[] subjectLabels = new JLabel[15];
         JTextField[] subjects = new JTextField[15];
@@ -25,24 +25,24 @@ public class mkEditor {
         frame.setTitle("file editor");
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-        constr.insets = new Insets(5, 5, 5, 5);
-        constr.anchor = GridBagConstraints.WEST;
-        constr.gridx=0;
-        constr.gridy=0;
+        construe.insets = new Insets(5, 5, 5, 5);
+        construe.anchor = GridBagConstraints.WEST;
+        construe.gridx=0;
+        construe.gridy=0;
         for (int i = 0; i < subjects.length; i++) {
             changeAble[i] = Boolean.parseBoolean(XMLManage.XMLReader(file.getPath(), URLs, i));
             toChangeAtt[i] = new JCheckBox("", changeAble[i]);
             subjects[i] = new JTextField(20);
             subjects[i].setText(URLs[i]);
             subjectLabels[i] = new JLabel(korSubjectNames[i]);
-            panel.add(subjectLabels[i], constr);
-            constr.gridx=1;
-            panel.add(subjects[i], constr);
-            constr.gridx=2;
-            panel.add(toChangeAtt[i], constr);
-            constr.gridx=0; constr.gridy=i+1;
+            panel.add(subjectLabels[i], construe);
+            construe.gridx=1;
+            panel.add(subjects[i], construe);
+            construe.gridx=2;
+            panel.add(toChangeAtt[i], construe);
+            construe.gridx=0; construe.gridy=i+1;
         }
-        constr.anchor = GridBagConstraints.CENTER;
+        construe.anchor = GridBagConstraints.CENTER;
 
         JButton OKButton = new JButton("OK");
         JButton CancelButton = new JButton("Cancel");
@@ -58,16 +58,16 @@ public class mkEditor {
             frame.dispose();
         });
         CancelButton.addActionListener(e -> frame.dispose());
-        panel.add(OKButton, constr);
-        constr.gridx=1;
-        panel.add(CancelButton, constr);
-        constr.anchor = GridBagConstraints.CENTER;
+        construe.gridx=1;
+        panel.add(OKButton, construe);
+        construe.gridx=2;
+        panel.add(CancelButton, construe);
         mainPanel.add(headingPanel);
         mainPanel.add(panel);
 
         frame.add(mainPanel);
         frame.pack();
-        frame.setSize(400, 600);
+        frame.setSize(500, 600);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
