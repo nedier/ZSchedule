@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class mkEditor {
-    public static void mkUI(String[] URLs, File file, File saveConfig, String txt, String[] subjectNames, boolean AttAble) throws ParserConfigurationException, IOException, SAXException {
+    public static void mkUI(String[] URLs, File file, File saveConfig, String txt, String[] subjectNames, boolean AttAble, JFrame f) throws ParserConfigurationException, IOException, SAXException {
         JFrame frame= new JFrame();
         JPanel mainPanel = new JPanel();
         boolean[] changeAble = new boolean[15];
@@ -48,6 +48,7 @@ public class mkEditor {
         JButton CancelButton = new JButton("Cancel");
         OKButton.addActionListener(e -> {
             for (int i = 0; i < subjects.length; i++) {
+                changeAble[i] = toChangeAtt[i].isSelected();
                 URLs[i] = subjects[i].getText();
             }
             try {
@@ -56,6 +57,12 @@ public class mkEditor {
                 parserConfigurationException.printStackTrace();
             }
             frame.dispose();
+            f.dispose();
+            try {
+                new mkGUI();
+            } catch (ParserConfigurationException | IOException | SAXException e1) {
+                e1.printStackTrace();
+            }
         });
         CancelButton.addActionListener(e -> frame.dispose());
         construe.gridx=1;

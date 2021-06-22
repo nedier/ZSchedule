@@ -150,17 +150,11 @@ public class mkGUI extends JFrame {
                 System.exit(0);
             } else if(e.getSource() == uploadButton) {
                 try {
-                    new FileChooser(URLs, saveConfig, "saveConfig", subjectNames, true);
+                    new FileChooser(URLs, saveConfig, "saveConfig", subjectNames, true, f);
                 } catch (ParserConfigurationException | SAXException | IOException | TransformerException e1) {
                     e1.printStackTrace();
                 }
                 uploadButton.setIcon(uploadPNG);
-                f.dispose();
-                try {
-                    new mkGUI();
-                } catch (ParserConfigurationException | IOException | SAXException e1) {
-                    e1.printStackTrace();
-                }
             }
         }
     }
