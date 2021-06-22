@@ -25,6 +25,5 @@ public class temp1 extends JFrame{
             e.printStackTrace();
         }
         new mkGUI();
-
     }
 }

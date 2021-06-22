@@ -150,8 +150,7 @@ public class mkGUI extends JFrame {
                 System.exit(0);
             } else if(e.getSource() == uploadButton) {
                 try {
-                    new FileChooser(URLs, changeAble);
-                    XMLManage.XMLWriter(saveConfig, "saveConfig", subjectNames, URLs, true, changeAble);
+                    new FileChooser(URLs, saveConfig, "saveConfig", subjectNames, true);
                 } catch (ParserConfigurationException | SAXException | IOException | TransformerException e1) {
                     e1.printStackTrace();
                 }
