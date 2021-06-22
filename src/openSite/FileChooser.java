@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class FileChooser extends JPanel {
-    JFileChooser fc = new JFileChooser();
+    JFileChooser fc = new JFileChooser("C:\\Temp\\ZSchedule\\files");
     FileChooser(String[] URLs, File saveConfig, String txt, String[] subjectNames, boolean AttAble) throws ParserConfigurationException, SAXException, IOException, TransformerException{
         fc.setAcceptAllFileFilterUsed(false);
         FileNameExtensionFilter filter = new FileNameExtensionFilter("XML File .xml", "xml");

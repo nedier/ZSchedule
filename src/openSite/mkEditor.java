@@ -67,7 +67,7 @@ public class mkEditor {
 
         frame.add(mainPanel);
         frame.pack();
-        frame.setSize(500, 600);
+        frame.setSize(400, 600);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
