@@ -59,7 +59,7 @@ public class mkGUI extends JFrame {
             lb1.setBounds(0, 130, 640, 50);
             classes.setVisible(false);
             try {
-                new TrayDemo("자동연결 활성화가 완료 되었습니다", false);
+                new TrayDemo("자동연결이 활성화 되었습니다", false, true);
             } catch (AWTException awtException) {
                 awtException.printStackTrace();
             }

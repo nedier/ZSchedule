@@ -4,14 +4,14 @@ import java.awt.*;
 import java.io.IOException;
 
 public class TrayDemo {
-    TrayDemo(String txt, boolean action) throws AWTException {
+    TrayDemo(String txt, boolean action, boolean onlyTray) throws AWTException {
         if (SystemTray.isSupported()) {
-            TrayIconMessage(txt, action);
+            TrayIconMessage(txt, action, onlyTray);
         } else {
             System.err.println("System tray not supported!");
         }
     }
-    public void TrayIconMessage(String txt, boolean action) throws AWTException {
+    public void TrayIconMessage(String txt, boolean action, boolean onlyTray) throws AWTException {
         SystemTray tray = SystemTray.getSystemTray();
         Image image = Toolkit.getDefaultToolkit().createImage("");
 
@@ -28,6 +28,9 @@ public class TrayDemo {
                     ioException.printStackTrace();
                 }
             });
+        }
+        if(onlyTray) {
+            tray.remove(trayIcon);
         }
     }
 }
