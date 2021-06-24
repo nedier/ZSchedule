@@ -53,8 +53,8 @@ public class mkEditor {
             }
             try {
                 XMLManage.XMLWriter(saveConfig, txt, subjectNames, URLs, AttAble, changeAble);
-            } catch (ParserConfigurationException | TransformerException parserConfigurationException) {
-                parserConfigurationException.printStackTrace();
+            } catch (ParserConfigurationException | TransformerException e1) {
+                e1.printStackTrace();
             }
             frame.dispose();
             f.dispose();

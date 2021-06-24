@@ -6,6 +6,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
@@ -19,16 +20,19 @@ public class mkGUI extends JFrame {
     static ImageIcon uploadPNG = new ImageIcon("C:\\Temp\\ZSchedule\\images\\upload.png");
     static ImageIcon uploadPNGEnter = new ImageIcon("C:\\Temp\\ZSchedule\\images\\uploadEnter.png");
 
+    static File file = new File("C:\\Temp\\ZSchedule\\files\\clearDay.txt");
+    static File saveConfig = new File("C:\\Temp\\ZSchedule\\files\\saveConfig.xml");
+    static File autoLinkingFile = new File("C:\\Temp\\ZSchedule\\files\\autoLinkConfig.txt");
+
     static JLabel lb1 = new JLabel("", SwingConstants.CENTER);
     static JButton classes = new JButton(nowClassBasic);
     static JButton uploadButton = new JButton(uploadPNG);
     static JToolBar bar = new JToolBar();
+    static JCheckBox autoLinking = new JCheckBox("자동 연결", Boolean.parseBoolean(fileRead(autoLinkingFile)));
 
     static String[] URLs = new String[15];
     static boolean[] changeAble = new boolean[URLs.length];
 
-    static File file = new File("C:\\Temp\\ZSchedule\\files\\clearDay.txt");
-    static File saveConfig = new File("C:\\Temp\\ZSchedule\\files\\saveConfig.xml");
 
     static String[] subjectNames = {"MeetEnd", "Kor", "Math", "Eng", "SinceB", "History", "PE", "Chin", "Music", "Moral", "Home", "Techno", "CEA", "SinceA", "Sports"};
     String str;
@@ -47,14 +51,39 @@ public class mkGUI extends JFrame {
         }
         ButtonDefaultSet(140, 160, 350, 40, classes, "linking");
         ButtonDefaultSet(0, 0, 48, 48, uploadButton, "open file");
-
-        lb1.setBounds(0, 80, 640, 50);
         lb1.setFont(new Font("", Font.PLAIN, 50));
+        autoLinking.setBounds(540, 0, 100, 15);
         manyIF.nowClass(lb1);
+
+        if(Boolean.parseBoolean(fileRead(autoLinkingFile))) {
+            lb1.setBounds(0, 130, 640, 50);
+            classes.setVisible(false);
+            try {
+                new TrayDemo("자동연결 활성화가 완료 되었습니다", false);
+            } catch (AWTException awtException) {
+                awtException.printStackTrace();
+            }
+        } else {
+            lb1.setBounds(0, 80, 640, 50);
+            classes.setVisible(true);
+        }
+        autoLinking.addItemListener(e -> {
+            if(e.getStateChange() == ItemEvent.SELECTED) {
+                BufferWriteTry("true", autoLinkingFile);
+            } else {
+                BufferWriteTry("false", autoLinkingFile);
+            }
+            f.dispose();
+            try {
+                new mkGUI();
+            } catch (ParserConfigurationException | IOException | SAXException e1) {
+                e1.printStackTrace();
+            }
+        });
+        f.getContentPane().add(autoLinking);
         f.getContentPane().add(lb1);
         f.getContentPane().add(classes);
         f.getContentPane().add(uploadButton);
-
         f.setSize(temp1.SCREEN_W, temp1.SCREEN_H);
         f.setLocationRelativeTo(null);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -137,10 +166,11 @@ public class mkGUI extends JFrame {
         }
         @Override
         public void mouseExited(MouseEvent e) {
-            if(e.getSource() == classes) {
-                classes.setIcon(nowClassBasic);
-            } else if(e.getSource() == uploadButton) {
+            if(e.getSource() == uploadButton) {
                 uploadButton.setIcon(uploadPNG);
+            }
+            if (!autoLinking.isSelected() && e.getSource() == classes) {
+                classes.setIcon(nowClassBasic);
             }
         }
         @Override

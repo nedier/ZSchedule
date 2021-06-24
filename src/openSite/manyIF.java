@@ -187,7 +187,7 @@ public class manyIF extends JOptionPane {
                     }
                 }
                 case 13 -> {
-                    if(temp1.date == 3 || temp1.date == 5) {
+                    if(temp1.date == 3 || temp1.date == 4 || temp1.date == 5) {
                         mkJOptionPane("오늘 수업에 과학 A 가 들어있습니다 \n 링크를 입력해 주세요", URLs, 13);
                     }
                 }
