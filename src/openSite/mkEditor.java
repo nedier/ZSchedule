@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class mkEditor {
-    public static void mkUI(String[] URLs, File file, File saveConfig, String txt, String[] subjectNames, boolean AttAble, JFrame f) throws ParserConfigurationException, IOException, SAXException {
+    public static void mkUI(String[] URLs, File saveConfig, String txt, String[] subjectNames, boolean AttAble, JFrame f) throws ParserConfigurationException, IOException, SAXException {
         JFrame frame= new JFrame();
         JPanel mainPanel = new JPanel();
         boolean[] changeAble = new boolean[15];
@@ -21,6 +21,7 @@ public class mkEditor {
         JLabel[] subjectLabels = new JLabel[15];
         JTextField[] subjects = new JTextField[15];
         JCheckBox[] toChangeAtt = new JCheckBox[15];
+        File file = new File("C:\\Temp\\ZSchedule\\files\\saveConfig.xml");
 
         frame.setTitle("file editor");
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));

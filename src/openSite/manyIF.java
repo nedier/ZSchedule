@@ -5,15 +5,11 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static openSite.mkGUI.mkJOptionPane;
 
 public class manyIF extends JOptionPane {
-    static String nowH = new SimpleDateFormat("HH").format(new Date());
-    static String nowM = new SimpleDateFormat("mm").format(new Date());
-    static int now = Integer.parseInt(nowH + nowM);
+    static int now = temp1.now;
     static void manyIFNowClass(String[] URLs) {
         switch (temp1.date) {
             case 1 -> {
@@ -222,7 +218,141 @@ public class manyIF extends JOptionPane {
             jL.setText("조회 종례");
         }
     }
-
+    public static boolean autoLinkingIF(String[] URLs) {
+        switch (temp1.date) {
+            case 1 -> {
+                if(now == 1440 || now == 845) {
+                    desktopView(URLs[0]);
+                    return true;
+                } else if(now == 930) {
+                    desktopView(URLs[4]);
+                    return true;
+                } else if(now == 1025) {
+                    desktopView(URLs[7]);
+                    return true;
+                } else if(now == 1120) {
+                    desktopView(URLs[1]);
+                    return true;
+                } else if(now == 1215) {
+                    desktopView(URLs[5]);
+                    return true;
+                } else if(now == 1340) {
+                    desktopView(URLs[2]);
+                    return true;
+                } else if(now == 1435) {
+                    desktopView(URLs[10]);
+                    return true;
+                }
+            }
+            case 2 -> {
+                if(now == 845 || now == 1535) {
+                    desktopView(URLs[0]);
+                    return true;
+                } else if(now == 930) {
+                    desktopView(URLs[6]);
+                    return true;
+                } else if(now == 1025) {
+                    desktopView(URLs[2]);
+                    return true;
+                } else if(now == 1120) {
+                    desktopView(URLs[1]);
+                    return true;
+                } else if(now == 1215) {
+                    desktopView(URLs[3]);
+                    return true;
+                } else if(now == 1340) {
+                    desktopView(URLs[10]);
+                    return true;
+                } else if(now == 1435) {
+                    desktopView(URLs[12]);
+                    return true;
+                } else if(now == 1530) {
+                    desktopView(URLs[5]);
+                    return true;
+                }
+            }
+            case 3 -> {
+                if(now == 845 || now == 1535) {
+                    desktopView(URLs[0]);
+                    return true;
+                } else if(now == 930) {
+                    desktopView(URLs[3]);
+                    return true;
+                } else if(now == 1025) {
+                    desktopView(URLs[2]);
+                    return true;
+                } else if(now == 1120) {
+                    desktopView(URLs[13]);
+                    return true;
+                } else if(now == 1215) {
+                    desktopView(URLs[14]);
+                    return true;
+                } else if(now == 1340) {
+                    desktopView(URLs[1]);
+                    return true;
+                } else if(now == 1435) {
+                    desktopView(URLs[8]);
+                    return true;
+                } else if(now == 1530) {
+                    desktopView(URLs[9]);
+                    return true;
+                }
+            }
+            case 4 -> {
+                if(now == 845 || now == 1440) {
+                    desktopView(URLs[0]);
+                    return true;
+                } else if(now == 930) {
+                    desktopView(URLs[6]);
+                    return true;
+                } else if(now == 1025) {
+                    desktopView(URLs[13]);
+                    return true;
+                } else if(now == 1120) {
+                    desktopView(URLs[5]);
+                    return true;
+                } else if(now == 1215) {
+                    desktopView(URLs[2]);
+                    return true;
+                } else if(now == 1340) {
+                    desktopView(URLs[7]);
+                    return true;
+                } else if(now == 1435) {
+                    desktopView(URLs[3]);
+                    return true;
+                }
+            }
+            case 5 -> {
+                if(now == 1440 || now == 845) {
+                    desktopView(URLs[0]);
+                    return true;
+                } else if(now == 930) {
+                    desktopView(URLs[1]);
+                    return true;
+                } else if(now == 1025) {
+                    desktopView(URLs[11]);
+                    return true;
+                } else if(now == 1120) {
+                    desktopView(URLs[9]);
+                    return true;
+                } else if(now == 1215) {
+                    desktopView(URLs[6]);
+                    return true;
+                } else if(now == 1340) {
+                    desktopView(URLs[8]);
+                    return true;
+                } else if(now == 1435) {
+                    desktopView(URLs[13]);
+                    return true;
+                }
+            }
+            default -> {
+                mkJOptionPane("휴일이거나 버그", null, 0);
+                return false;
+            }
+        }
+        return false;
+    }
     public static void desktopView(String str) {
         try{
             Desktop.getDesktop().browse(new URI(str));
