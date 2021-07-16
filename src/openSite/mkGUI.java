@@ -65,7 +65,7 @@ public class mkGUI extends JFrame {
             lb1.setBounds(0, 130, 640, 50);
             classes.setVisible(false);
             try {
-                new TrayDemo("자동연결이 활성화 되었습니다 (클릭하여 숨기기)", true, f);
+                new TrayDemo("자동연결이 활성화 되었습니다 (클릭하여 숨기기)", false, f);
             } catch (AWTException awtException) {
                 awtException.printStackTrace();
             }
@@ -193,7 +193,13 @@ public class mkGUI extends JFrame {
                 } else {
                     BufferWriteTry("false", autoLinkingFile);
                 }
-                f.invalidate();
+                try {
+                    Runtime.getRuntime().exec("C:\\Temp\\ZSchedule\\ZSchedule.exe");
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                TrayDemo.tray.remove(TrayDemo.trayIcon);
+                System.exit(0);
             }
         }
     }
@@ -201,7 +207,7 @@ public class mkGUI extends JFrame {
         public void run() {
             while(autoLinking.isSelected()) {
                 temp1.now = Integer.parseInt(Integer.toString(LocalTime.now().getHour()) + LocalTime.now().getMinute());
-                manyIF.autoLinkingIF(URLs);
+                if(manyIF.autoLinkingIF(URLs)) break;
             }
             Thread.currentThread().interrupt();
         }

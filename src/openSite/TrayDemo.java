@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TrayDemo {
+    static SystemTray tray = SystemTray.getSystemTray();
+    static Image image = Toolkit.getDefaultToolkit().createImage("");
+    static TrayIcon trayIcon = new TrayIcon(image, "Tray Demo");
+
     TrayDemo(String txt, boolean onlyTray, JFrame f) throws AWTException {
         if (SystemTray.isSupported()) {
             TrayIconMessage(txt, onlyTray, f);
@@ -12,12 +16,9 @@ public class TrayDemo {
         }
     }
     public void TrayIconMessage(String txt, boolean onlyTray, JFrame f) throws AWTException {
-        SystemTray tray = SystemTray.getSystemTray();
-        Image image = Toolkit.getDefaultToolkit().createImage("");
-
-        TrayIcon trayIcon = new TrayIcon(image, "Tray Demo");
         trayIcon.setImageAutoSize(true);
         trayIcon.setToolTip("ZSchedule");
+        trayIcon.setPopupMenu(createPopupMenu());
         tray.add(trayIcon);
         trayIcon.displayMessage(txt, "알림", TrayIcon.MessageType.INFO);
         trayIcon.addActionListener(e -> {
