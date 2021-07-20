@@ -14,8 +14,8 @@ public class temp1 extends JFrame{
     public static final int SCREEN_H = 360;
 
     public static int date = LocalDate.now().getDayOfWeek().getValue();
-    public static int now = Integer.parseInt(Integer.toString(LocalTime.now().getHour()) + LocalTime.now().getMinute());
-
+    public static int now =  Integer.parseInt(LocalTime.now().getHour()
+            + (LocalTime.now().getMinute() < 10 ? "0" + LocalTime.now().getMinute() : String.valueOf(LocalTime.now().getMinute())));
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

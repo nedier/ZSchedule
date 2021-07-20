@@ -40,6 +40,7 @@ public class mkGUI extends JFrame {
     String str;
 
     public mkGUI() throws ParserConfigurationException, IOException, SAXException {
+        System.out.println(temp1.now);
         Thread thread = new Thread(new ThreadWithRunnable());
         for (int i = 0; i < URLs.length; i++) {
             changeAble[i] = Boolean.parseBoolean(XMLManage.XMLReader(saveConfig.getPath(), URLs, i));
@@ -206,7 +207,8 @@ public class mkGUI extends JFrame {
     public static class ThreadWithRunnable implements Runnable {
         public void run() {
             while(autoLinking.isSelected()) {
-                temp1.now = Integer.parseInt(Integer.toString(LocalTime.now().getHour()) + LocalTime.now().getMinute());
+                temp1.now = Integer.parseInt(LocalTime.now().getHour()
+                        + (LocalTime.now().getMinute() < 10 ? "0" + LocalTime.now().getMinute() : String.valueOf(LocalTime.now().getMinute())));
                 if(manyIF.autoLinkingIF(URLs)) break;
             }
             Thread.currentThread().interrupt();
