@@ -10,22 +10,21 @@ import java.io.File;
 import java.io.IOException;
 
 public class mkEditor {
-    public static void mkUI(String[] URLs, File saveConfig, String txt, String[] subjectNames, boolean AttAble, JFrame f) throws ParserConfigurationException, IOException, SAXException {
-        JFrame frame= new JFrame();
-        JPanel mainPanel = new JPanel();
-        boolean[] changeAble = new boolean[15];
-        JPanel headingPanel = new JPanel();
-        JPanel panel = new JPanel(new GridBagLayout());
-        GridBagConstraints construe = new GridBagConstraints();
-        String[] korSubjectNames = {"조종례", "국어", "수학", "영어", "과학B", "역사", "체육", "한문", "음악", "도덕", "가정", "기술", "창체", "과학 A", "스포츠"};
-        JLabel[] subjectLabels = new JLabel[15];
-        JTextField[] subjects = new JTextField[15];
-        JCheckBox[] toChangeAtt = new JCheckBox[15];
-        File file = new File("C:\\Temp\\ZSchedule\\files\\saveConfig.xml");
+    static JFrame frame= new JFrame();
+    static JPanel mainPanel = new JPanel();
+    static boolean[] changeAble = new boolean[15];
+    static JPanel headingPanel = new JPanel();
+    static JPanel panel = new JPanel(new GridBagLayout());
+    static GridBagConstraints construe = new GridBagConstraints();
+    static String[] korSubjectNames = {"조종례", "국어", "수학", "영어", "과학B", "역사", "체육", "한문", "음악", "도덕", "가정", "기술", "창체", "과학 A", "스포츠"};
+    static JLabel[] subjectLabels = new JLabel[15];
+    static JTextField[] subjects = new JTextField[15];
+    static JCheckBox[] toChangeAtt = new JCheckBox[15];
+    static File file = new File("C:\\Temp\\ZSchedule\\files\\saveConfig.xml");
 
+    public static void mkUI(String[] URLs, File saveConfig, String txt, String[] subjectNames, boolean AttAble, JFrame f) throws ParserConfigurationException, IOException, SAXException {
         frame.setTitle("file editor");
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-
         construe.insets = new Insets(5, 5, 5, 5);
         construe.anchor = GridBagConstraints.WEST;
         construe.gridx=0;

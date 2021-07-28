@@ -19,8 +19,6 @@ public class mkGUI extends JFrame {
 
     static ImageIcon nowClassBasic = new ImageIcon("C:\\Temp\\ZSchedule\\images\\classes.png");
     static ImageIcon nowClassEnter = new ImageIcon("C:\\Temp\\ZSchedule\\images\\classesEnter.png");
-    static ImageIcon uploadPNG = new ImageIcon("C:\\Temp\\ZSchedule\\images\\upload.png");
-    static ImageIcon uploadPNGEnter = new ImageIcon("C:\\Temp\\ZSchedule\\images\\uploadEnter.png");
 
     static File file = new File("C:\\Temp\\ZSchedule\\files\\clearDay.txt");
     static File saveConfig = new File("C:\\Temp\\ZSchedule\\files\\saveConfig.xml");
@@ -28,19 +26,32 @@ public class mkGUI extends JFrame {
 
     static JLabel lb1 = new JLabel("", SwingConstants.CENTER);
     static JButton classes = new JButton(nowClassBasic);
-    static JButton uploadButton = new JButton(uploadPNG);
     static JToolBar bar = new JToolBar();
     static JCheckBox autoLinking = new JCheckBox("자동 연결", Boolean.parseBoolean(fileRead(autoLinkingFile)));
+    static JMenuBar mb = new JMenuBar();
+    static JMenu menu = new JMenu("Edit");
+    static JMenu shortDay = new JMenu("단축수업");
+    static JMenuItem edit = new JMenuItem("링크");
+    static JMenuItem shortDayBreakTime = new JMenuItem("쉬는시간");
+    static JMenuItem shortDayStudyTime = new JMenuItem("수업시간");
 
     static String[] URLs = new String[15];
     static boolean[] changeAble = new boolean[URLs.length];
-
-
     static String[] subjectNames = {"MeetEnd", "Kor", "Math", "Eng", "SinceB", "History", "PE", "Chin", "Music", "Moral", "Home", "Techno", "CEA", "SinceA", "Sports"};
     String str;
 
+    static int studyTime = 40;
+    static int breakTime = 15;
+
     public mkGUI() throws ParserConfigurationException, IOException, SAXException {
-        System.out.println(temp1.now);
+        shortDay.add(shortDayBreakTime);
+        shortDay.add(shortDayStudyTime);
+        menu.add(edit);
+        menu.add(shortDay);
+        mb.add(menu);
+        edit.addMouseListener(new MouseEvents());
+        shortDayBreakTime.addMouseListener(new MouseEvents());
+        shortDayStudyTime.addMouseListener(new MouseEvents());
         Thread thread = new Thread(new ThreadWithRunnable());
         for (int i = 0; i < URLs.length; i++) {
             changeAble[i] = Boolean.parseBoolean(XMLManage.XMLReader(saveConfig.getPath(), URLs, i));
@@ -54,10 +65,8 @@ public class mkGUI extends JFrame {
             BufferWriteTry(Integer.toString(temp1.date), file);
         }
         ButtonDefaultSet(140, 160, 350, 40, classes, "linking");
-        ButtonDefaultSet(0, 0, 48, 48, uploadButton, "open file");
         lb1.setFont(new Font("", Font.PLAIN, 50));
         autoLinking.setBounds(540, 0, 100, 15);
-
         setFrameOptions(f);
 
         manyIF.nowClass(lb1);
@@ -94,22 +103,34 @@ public class mkGUI extends JFrame {
     }
 
     public static void mkJOptionPane(String showMsg, String[] target, int i) {
-        if(target == null) {
-            JOptionPane.showMessageDialog(null, showMsg, "Notification", JOptionPane.ERROR_MESSAGE);
-        }else {
-            String index = JOptionPane.showInputDialog(showMsg);
-            URLs[i] = index;
-            if (index == null) {
-                manyIF.desktopView("https://rang.edunet.net/main.do");
-                mkJOptionPane(showMsg, target, i);
-            } else {
-                try {
-                    XMLManage.XMLWriter(saveConfig, "saveConfig", subjectNames, URLs, true, changeAble);
-                } catch (ParserConfigurationException | TransformerException e) {
-                    e.printStackTrace();
-                }
+        String index = JOptionPane.showInputDialog(showMsg);
+        if (index == null) {
+            manyIF.desktopView("https://rang.edunet.net/main.do");
+            mkJOptionPane(showMsg, target, i);
+        } else {
+            if(index.contains(" ")) {
+                index = index.replace(" ", "");
+            }
+            target[i] = index;
+            try {
+                XMLManage.XMLWriter(saveConfig, "saveConfig", subjectNames, URLs, true, changeAble);
+            } catch (ParserConfigurationException | TransformerException e) {
+                e.printStackTrace();
             }
         }
+    }
+    public static void mkJOptionPane(String showMsg, String title) {
+        JOptionPane.showMessageDialog(null, showMsg, title, JOptionPane.ERROR_MESSAGE);
+    }
+    public static int mkJOptionPane(String showMsg) {
+        String result = JOptionPane.showInputDialog(showMsg);
+        if(result.matches("-?\\d+")) {
+            return Integer.parseInt(result);
+        } else {
+            mkJOptionPane("정수를 입력해 주세요", "Notification");
+            mkJOptionPane(showMsg);
+        }
+        return 0;
     }
 
     public static void ButtonDefaultSet(int x, int y, int width, int height, JButton btn, String toolTipText) {
@@ -140,12 +161,12 @@ public class mkGUI extends JFrame {
         f.getContentPane().add(autoLinking);
         f.getContentPane().add(lb1);
         f.getContentPane().add(classes);
-        f.getContentPane().add(uploadButton);
         f.setSize(temp1.SCREEN_W, temp1.SCREEN_H);
         f.setLocationRelativeTo(null);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLayout(null);
         f.getContentPane().setBackground(new Color(245, 245, 245, 255));
+        f.setJMenuBar(mb);
         f.setVisible(true);
     }
     public static class MouseEvents implements MouseListener {
@@ -157,15 +178,10 @@ public class mkGUI extends JFrame {
         public void mouseEntered(MouseEvent e) {
             if(e.getSource() == classes) {
                 classes.setIcon(nowClassEnter);
-            } else if(e.getSource() == uploadButton) {
-                uploadButton.setIcon(uploadPNGEnter);
             }
         }
         @Override
         public void mouseExited(MouseEvent e) {
-            if(e.getSource() == uploadButton) {
-                uploadButton.setIcon(uploadPNG);
-            }
             if (!autoLinking.isSelected() && e.getSource() == classes) {
                 classes.setIcon(nowClassBasic);
             }
@@ -175,13 +191,16 @@ public class mkGUI extends JFrame {
             if(e.getSource() == classes) {
                 manyIF.manyIFNowClass(URLs);
                 System.exit(0);
-            } else if(e.getSource() == uploadButton) {
-                try {
-                    mkEditor.mkUI(URLs, saveConfig, "saveConfig", subjectNames, true, f);
-                } catch (ParserConfigurationException | SAXException | IOException e1) {
-                    e1.printStackTrace();
-                }
-                uploadButton.setIcon(uploadPNG);
+            } else if(e.getSource() == edit) {
+            try {
+                mkEditor.mkUI(URLs, saveConfig, "saveConfig", subjectNames, true, f);
+            } catch (ParserConfigurationException | SAXException | IOException e1) {
+                e1.printStackTrace();
+            }
+            } else if(e.getSource() == shortDayBreakTime) {
+                breakTime = mkJOptionPane("쉬는시간이 몇 분인지 입력해 주세요");
+            } else if(e.getSource() == shortDayStudyTime) {
+                studyTime = mkJOptionPane("수업시간이 몇 분인지 입력해 주세요");
             }
         }
     }
