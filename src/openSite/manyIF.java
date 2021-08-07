@@ -16,7 +16,7 @@ public class manyIF extends JOptionPane {
     static void manyIFNowClass(String[] URLs) {
         switch (temp1.date) {
             case 1 -> {
-                if(now < 845 - breakTimeReduced || now > 1440) {
+                if(now < 845 - breakTimeReduced || now > 1440 - allReduced) {
                     desktopView(URLs[0]);
                 } else if(now < 930 - allReduced) {
                     desktopView(URLs[4]);
@@ -35,7 +35,7 @@ public class manyIF extends JOptionPane {
                 }
             }
             case 2 -> {
-                if(now < 845 - breakTimeReduced || now > 1535) {
+                if(now < 845 - breakTimeReduced || now > 1535 - allReduced) {
                     desktopView(URLs[0]);
                 } else if(now < 930 - allReduced) {
                     desktopView(URLs[6]);
@@ -56,7 +56,7 @@ public class manyIF extends JOptionPane {
                 }
             }
             case 3 -> {
-                if(now < 845 - breakTimeReduced || now > 1535) {
+                if(now < 845 - breakTimeReduced || now > 1535 - allReduced) {
                     desktopView(URLs[0]);
                 } else if(now < 930 - allReduced) {
                     desktopView(URLs[3]);
@@ -77,7 +77,7 @@ public class manyIF extends JOptionPane {
                 }
             }
             case 4 -> {
-                if(now < 845 - breakTimeReduced || now > 1440) {
+                if(now < 845 - breakTimeReduced || now > 1440 - allReduced) {
                     desktopView(URLs[0]);
                 } else if(now < 930 - allReduced) {
                     desktopView(URLs[6]);
@@ -96,7 +96,7 @@ public class manyIF extends JOptionPane {
                 }
             }
             case 5 -> {
-                if(now > 1440 - breakTimeReduced || now < 845) {
+                if(now > 1440 - breakTimeReduced || now < 845 - allReduced) {
                     desktopView(URLs[0]);
                 } else if(now < 930 - allReduced) {
                     desktopView(URLs[1]);
@@ -199,7 +199,7 @@ public class manyIF extends JOptionPane {
         }
     }
     public static void nowClass(JLabel jL) {
-        if(!(temp1.date == 0 || temp1.date == 6) && now < 845 - breakTimeReduced || now > 1535) {
+        if(!(temp1.date == 0 || temp1.date == 6) && now < 845 - breakTimeReduced || now > 1535 - allReduced) {
             jL.setText("조회 종례");
         } else if(now < 930 - allReduced) {
             jL.setText("1교시");
@@ -224,7 +224,7 @@ public class manyIF extends JOptionPane {
     public static boolean autoLinkingIF(String[] URLs) {
         switch (temp1.date) {
             case 1 -> {
-                if(now == 845 - breakTimeReduced || now == 1440) {
+                if(now == 845 - breakTimeReduced || now == 1440 - allReduced) {
                     desktopView(URLs[0]);
                     return true;
                 } else if(now == 930 - allReduced) {
@@ -248,7 +248,7 @@ public class manyIF extends JOptionPane {
                 }
             }
             case 2 -> {
-                if(now == 845 - breakTimeReduced|| now == 1535) {
+                if(now == 845 - breakTimeReduced|| now == 1535 - allReduced) {
                     desktopView(URLs[0]);
                     return true;
                 } else if(now == 930 - allReduced) {
@@ -275,7 +275,7 @@ public class manyIF extends JOptionPane {
                 }
             }
             case 3 -> {
-                if(now == 845 - breakTimeReduced|| now == 1535) {
+                if(now == 845 - breakTimeReduced|| now == 1535 - allReduced) {
                     desktopView(URLs[0]);
                     return true;
                 } else if(now == 930 - allReduced) {
@@ -302,7 +302,7 @@ public class manyIF extends JOptionPane {
                 }
             }
             case 4 -> {
-                if(now == 845 - breakTimeReduced|| now == 1440) {
+                if(now == 845 - breakTimeReduced|| now == 1440 - allReduced) {
                     desktopView(URLs[0]);
                     return true;
                 } else if(now == 930 - allReduced) {
@@ -326,7 +326,7 @@ public class manyIF extends JOptionPane {
                 }
             }
             case 5 -> {
-                if(now == 845 - breakTimeReduced || now == 1440) {
+                if(now == 845 - breakTimeReduced || now == 1440 - allReduced) {
                     desktopView(URLs[0]);
                     return true;
                 } else if(now == 930 - allReduced) {

@@ -6,10 +6,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.*;
 import java.time.LocalTime;
 
@@ -38,10 +35,15 @@ public class mkGUI extends JFrame {
     static String[] URLs = new String[15];
     static boolean[] changeAble = new boolean[URLs.length];
     static String[] subjectNames = {"MeetEnd", "Kor", "Math", "Eng", "SinceB", "History", "PE", "Chin", "Music", "Moral", "Home", "Techno", "CEA", "SinceA", "Sports"};
-    String str;
 
     static int studyTime = 40;
     static int breakTime = 15;
+
+    static MenuItem openItem = new MenuItem("Open");
+    static MenuItem hideItem = new MenuItem("Hide");
+    static MenuItem exitItem = new MenuItem("Exit");
+
+    final static PopupMenu popup = new PopupMenu();
 
     public mkGUI() throws ParserConfigurationException, IOException, SAXException {
         shortDay.add(shortDayBreakTime);
@@ -57,8 +59,7 @@ public class mkGUI extends JFrame {
             changeAble[i] = Boolean.parseBoolean(XMLManage.XMLReader(saveConfig.getPath(), URLs, i));
             XMLManage.XMLReader(saveConfig.getPath(), URLs, i);
         }
-        str = fileRead(file);
-        if(!str.equals(Integer.toString(temp1.date))) {
+        if(!fileRead(file).equals(Integer.toString(temp1.date))) {
             for (int i = 0; i < changeAble.length; i++) {
                 manyIF.manyIFToday(changeAble[i], i, URLs);
             }
@@ -124,11 +125,15 @@ public class mkGUI extends JFrame {
     }
     public static int mkJOptionPane(String showMsg) {
         String result = JOptionPane.showInputDialog(showMsg);
-        if(result.matches("-?\\d+")) {
-            return Integer.parseInt(result);
-        } else {
-            mkJOptionPane("정수를 입력해 주세요", "Notification");
+        if(result == null) {
             mkJOptionPane(showMsg);
+        } else {
+            if (result.matches("-?\\d+")) {
+                return Integer.parseInt(result);
+            } else {
+                mkJOptionPane("정수를 입력해 주세요", "Notification");
+                mkJOptionPane(showMsg);
+            }
         }
         return 0;
     }
@@ -231,6 +236,31 @@ public class mkGUI extends JFrame {
                 if(manyIF.autoLinkingIF(URLs)) break;
             }
             Thread.currentThread().interrupt();
+        }
+    }
+    protected static PopupMenu createPopupMenu() {
+        openItem.addActionListener(new ActionListeners());
+        hideItem.addActionListener(new ActionListeners());
+        exitItem.addActionListener(new ActionListeners());
+
+        popup.add(openItem);
+        popup.add(hideItem);
+        popup.addSeparator();
+        popup.add(exitItem);
+        return popup;
+    }
+    public static class ActionListeners implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == openItem) {
+                mkGUI.f.setVisible(true);
+            }
+            if(e.getSource() == hideItem) {
+                mkGUI.f.setVisible(false);
+            }
+            if(e.getSource() == exitItem) {
+                System.exit(0);
+            }
         }
     }
 }
