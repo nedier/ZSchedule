@@ -114,7 +114,10 @@ public class manyIF extends JOptionPane {
                     System.out.println("BUG");
                 }
             }
-            default -> mkJOptionPane("휴일이거나 버그", "Notification");
+            default -> {
+                mkJOptionPane("휴일이거나 버그", "Notification");
+                System.exit(0);
+            }
         }
     }
     static void manyIFToday(boolean b, int i, String[] URLs) {
@@ -221,7 +224,7 @@ public class manyIF extends JOptionPane {
             jL.setText("조회 종례");
         }
     }
-    public static boolean autoLinkingIF(String[] URLs) {
+    public static boolean autoLinkingIF(String[] URLs, int now) {
         switch (temp1.date) {
             case 1 -> {
                 if(now == 845 - breakTimeReduced || now == 1440 - allReduced) {
@@ -351,7 +354,7 @@ public class manyIF extends JOptionPane {
             }
             default -> {
                 mkJOptionPane("휴일이거나 버그", "Notification");
-                return false;
+                System.exit(0);
             }
         }
         return false;
