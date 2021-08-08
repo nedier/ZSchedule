@@ -5,6 +5,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalTime;
 
 import static openSite.mkGUI.mkJOptionPane;
 
@@ -224,130 +225,132 @@ public class manyIF extends JOptionPane {
             jL.setText("조회 종례");
         }
     }
-    public static boolean autoLinkingIF(String[] URLs, int now) {
+    public static boolean autoLinkingIF(String[] URLs) {
+        int innerNow = Integer.parseInt(LocalTime.now().getHour()
+                + (LocalTime.now().getMinute() < 10 ? "0" + LocalTime.now().getMinute() : String.valueOf(LocalTime.now().getMinute())));
         switch (temp1.date) {
             case 1 -> {
-                if(now == 845 - breakTimeReduced || now == 1440 - allReduced) {
+                if(innerNow == 845 - breakTimeReduced || innerNow == 1440 - allReduced) {
                     desktopView(URLs[0]);
                     return true;
-                } else if(now == 930 - allReduced) {
+                } else if(innerNow == 930 - allReduced) {
                     desktopView(URLs[4]);
                     return true;
-                } else if(now == 1025 - allReduced) {
+                } else if(innerNow == 1025 - allReduced) {
                     desktopView(URLs[7]);
                     return true;
-                } else if(now == 1120 - allReduced) {
+                } else if(innerNow == 1120 - allReduced) {
                     desktopView(URLs[1]);
                     return true;
-                } else if(now == 1215 - allReduced) {
+                } else if(innerNow == 1215 - allReduced) {
                     desktopView(URLs[5]);
                     return true;
-                } else if(now == 1340 - allReduced) {
+                } else if(innerNow == 1340 - allReduced) {
                     desktopView(URLs[2]);
                     return true;
-                } else if(now == 1435 - allReduced) {
+                } else if(innerNow == 1435 - allReduced) {
                     desktopView(URLs[10]);
                     return true;
                 }
             }
             case 2 -> {
-                if(now == 845 - breakTimeReduced|| now == 1535 - allReduced) {
+                if(innerNow == 845 - breakTimeReduced|| innerNow == 1535 - allReduced) {
                     desktopView(URLs[0]);
                     return true;
-                } else if(now == 930 - allReduced) {
+                } else if(innerNow == 930 - allReduced) {
                     desktopView(URLs[6]);
                     return true;
-                } else if(now == 1025 - allReduced) {
+                } else if(innerNow == 1025 - allReduced) {
                     desktopView(URLs[2]);
                     return true;
-                } else if(now == 1120 - allReduced) {
+                } else if(innerNow == 1120 - allReduced) {
                     desktopView(URLs[1]);
                     return true;
-                } else if(now == 1215 - allReduced) {
+                } else if(innerNow == 1215 - allReduced) {
                     desktopView(URLs[3]);
                     return true;
-                } else if(now == 1340 - allReduced) {
+                } else if(innerNow == 1340 - allReduced) {
                     desktopView(URLs[10]);
                     return true;
-                } else if(now == 1435 - allReduced) {
+                } else if(innerNow == 1435 - allReduced) {
                     desktopView(URLs[12]);
                     return true;
-                } else if(now == 1530 - allReduced) {
+                } else if(innerNow == 1530 - allReduced) {
                     desktopView(URLs[5]);
                     return true;
                 }
             }
             case 3 -> {
-                if(now == 845 - breakTimeReduced|| now == 1535 - allReduced) {
+                if(innerNow == 845 - breakTimeReduced|| innerNow == 1535 - allReduced) {
                     desktopView(URLs[0]);
                     return true;
-                } else if(now == 930 - allReduced) {
+                } else if(innerNow == 930 - allReduced) {
                     desktopView(URLs[3]);
                     return true;
-                } else if(now == 1025 - allReduced) {
+                } else if(innerNow == 1025 - allReduced) {
                     desktopView(URLs[2]);
                     return true;
-                } else if(now == 1120 - allReduced) {
+                } else if(innerNow == 1120 - allReduced) {
                     desktopView(URLs[13]);
                     return true;
-                } else if(now == 1215 - allReduced) {
+                } else if(innerNow == 1215 - allReduced) {
                     desktopView(URLs[14]);
                     return true;
-                } else if(now == 1340 - allReduced) {
+                } else if(innerNow == 1340 - allReduced) {
                     desktopView(URLs[1]);
                     return true;
-                } else if(now == 1435 - allReduced) {
+                } else if(innerNow == 1435 - allReduced) {
                     desktopView(URLs[8]);
                     return true;
-                } else if(now == 1530 - allReduced) {
+                } else if(innerNow == 1530 - allReduced) {
                     desktopView(URLs[9]);
                     return true;
                 }
             }
             case 4 -> {
-                if(now == 845 - breakTimeReduced|| now == 1440 - allReduced) {
+                if(innerNow == 845 - breakTimeReduced|| innerNow == 1440 - allReduced) {
                     desktopView(URLs[0]);
                     return true;
-                } else if(now == 930 - allReduced) {
+                } else if(innerNow == 930 - allReduced) {
                     desktopView(URLs[6]);
                     return true;
-                } else if(now == 1025 - allReduced) {
+                } else if(innerNow == 1025 - allReduced) {
                     desktopView(URLs[13]);
                     return true;
-                } else if(now == 1120 - allReduced) {
+                } else if(innerNow == 1120 - allReduced) {
                     desktopView(URLs[5]);
                     return true;
-                } else if(now == 1215 - allReduced) {
+                } else if(innerNow == 1215 - allReduced) {
                     desktopView(URLs[2]);
                     return true;
-                } else if(now == 1340 - allReduced) {
+                } else if(innerNow == 1340 - allReduced) {
                     desktopView(URLs[7]);
                     return true;
-                } else if(now == 1435 - allReduced) {
+                } else if(innerNow == 1435 - allReduced) {
                     desktopView(URLs[3]);
                     return true;
                 }
             }
             case 5 -> {
-                if(now == 845 - breakTimeReduced || now == 1440 - allReduced) {
+                if(innerNow == 845 - breakTimeReduced || innerNow == 1440 - allReduced) {
                     desktopView(URLs[0]);
                     return true;
-                } else if(now == 930 - allReduced) {
+                } else if(innerNow == 930 - allReduced) {
                     desktopView(URLs[1]);
                     return true;
-                } else if(now == 1025 - allReduced) {
+                } else if(innerNow == 1025 - allReduced) {
                     desktopView(URLs[11]);
                     return true;
-                } else if(now == 1120 - allReduced) {
+                } else if(innerNow == 1120 - allReduced) {
                     desktopView(URLs[9]);
                     return true;
-                } else if(now == 1215 - allReduced) {
+                } else if(innerNow == 1215 - allReduced) {
                     desktopView(URLs[6]);
                     return true;
-                } else if(now == 1340 - allReduced) {
+                } else if(innerNow == 1340 - allReduced) {
                     desktopView(URLs[8]);
                     return true;
-                } else if(now == 1435 - allReduced) {
+                } else if(innerNow == 1435 - allReduced) {
                     desktopView(URLs[13]);
                     return true;
                 }

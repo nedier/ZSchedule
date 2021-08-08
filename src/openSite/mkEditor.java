@@ -60,7 +60,7 @@ public class mkEditor {
             f.dispose();
             try {
                 new mkGUI();
-            } catch (ParserConfigurationException | IOException | SAXException e1) {
+            } catch (ParserConfigurationException | IOException | SAXException | AWTException e1) {
                 e1.printStackTrace();
             }
         });

@@ -46,7 +46,11 @@ public class mkGUI extends JFrame {
     final static PopupMenu popup = new PopupMenu();
     static Thread thread = new Thread(new ThreadWithRunnable());
 
-    public mkGUI() throws ParserConfigurationException, IOException, SAXException {
+    public mkGUI() throws ParserConfigurationException, IOException, SAXException, AWTException {
+        shortDay.setMargin(new Insets(2, -30, 2, 2));
+        edit.setMargin(new Insets(2, -30, 2, 2));
+        shortDayBreakTime.setMargin(new Insets(2, -30, 2, 2));
+        shortDayStudyTime.setMargin(new Insets(2, -30, 2, 2));
         shortDay.add(shortDayBreakTime);
         shortDay.add(shortDayStudyTime);
         menu.add(edit);
@@ -75,16 +79,15 @@ public class mkGUI extends JFrame {
         if(autoLinking.isSelected()) {
             lb1.setBounds(0, 130, 640, 50);
             classes.setVisible(false);
-            try {
-                new TrayDemo("자동연결이 활성화 되었습니다 (클릭하여 숨기기)", false, f);
-            } catch (AWTException awtException) {
-                awtException.printStackTrace();
-            }
+            TrayDemo.TrayDemoDefault();
+            // new TrayDemo("자동연결이 활성화 되었습니다 (클릭하여 숨기기)", false, f);
         } else {
             lb1.setBounds(0, 80, 640, 50);
             classes.setVisible(true);
         }
-        thread.start();
+        if(autoLinking.isSelected()) {
+            thread.start();
+        }
     }
 
     public static void BufferWriteTry(String index, File target) {
@@ -231,13 +234,7 @@ public class mkGUI extends JFrame {
     public static class ThreadWithRunnable implements Runnable {
         @Override
         public void run() {
-            while(!manyIF.autoLinkingIF(URLs, temp1.now)) {
-                if(autoLinking.isSelected()) {
-                 temp1.now = Integer.parseInt(LocalTime.now().getHour()
-                        + (LocalTime.now().getMinute() < 10 ? "0" + LocalTime.now().getMinute() : String.valueOf(LocalTime.now().getMinute())));
-                System.out.println(temp1.now);
-                }
-            }
+            while (!manyIF.autoLinkingIF(URLs))
             Thread.currentThread().interrupt();
         }
     }

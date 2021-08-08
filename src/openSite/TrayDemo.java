@@ -9,6 +9,13 @@ public class TrayDemo {
     static Image image = Toolkit.getDefaultToolkit().getImage("C:\\Temp\\ZSchedule\\images\\zoom.ico");
     static TrayIcon trayIcon = new TrayIcon(image, "Tray Demo");
 
+    static void TrayDemoDefault() throws AWTException {
+        trayIcon.setImageAutoSize(true);
+        trayIcon.setToolTip("ZSchedule");
+        trayIcon.setPopupMenu(mkGUI.createPopupMenu());
+        tray.add(trayIcon);
+    }
+
     TrayDemo(String txt, boolean onlyTray, JFrame f) throws AWTException {
         if (SystemTray.isSupported()) {
             TrayIconMessage(txt, onlyTray, f);
