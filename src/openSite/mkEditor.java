@@ -15,6 +15,8 @@ public class mkEditor {
     static boolean[] changeAble = new boolean[15];
     static JPanel headingPanel = new JPanel();
     static JPanel panel = new JPanel(new GridBagLayout());
+    static JButton OKButton = new JButton("OK");
+    static JButton CancelButton = new JButton("Cancel");
     static GridBagConstraints construe = new GridBagConstraints();
     static String[] korSubjectNames = {"조종례", "국어", "수학", "영어", "과학B", "역사", "체육", "한문", "음악", "도덕", "가정", "기술", "창체", "과학 A", "스포츠"};
     static JLabel[] subjectLabels = new JLabel[15];
@@ -23,7 +25,7 @@ public class mkEditor {
     static File file = new File("C:\\Temp\\ZSchedule\\files\\saveConfig.xml");
 
     public static void mkUI(String[] URLs, File saveConfig, String txt, String[] subjectNames, boolean AttAble, JFrame f) throws ParserConfigurationException, IOException, SAXException {
-        frame.setTitle("file editor");
+        frame.setTitle("link edit");
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         construe.insets = new Insets(5, 5, 5, 5);
         construe.anchor = GridBagConstraints.WEST;
@@ -44,8 +46,6 @@ public class mkEditor {
         }
         construe.anchor = GridBagConstraints.CENTER;
 
-        JButton OKButton = new JButton("OK");
-        JButton CancelButton = new JButton("Cancel");
         OKButton.addActionListener(e -> {
             for (int i = 0; i < subjects.length; i++) {
                 changeAble[i] = toChangeAtt[i].isSelected();

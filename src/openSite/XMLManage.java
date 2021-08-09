@@ -56,8 +56,6 @@ public class XMLManage {
         int index = i;
         if(index == 0) {
             index = 1;
-        } else if(index > 14) {
-            return null;
         } else {
             index = index * 2 + 1;
         }

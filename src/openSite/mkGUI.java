@@ -8,7 +8,6 @@ import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.time.LocalTime;
 
 public class mkGUI extends JFrame {
 
@@ -20,6 +19,8 @@ public class mkGUI extends JFrame {
     static File file = new File("C:\\Temp\\ZSchedule\\files\\clearDay.txt");
     static File saveConfig = new File("C:\\Temp\\ZSchedule\\files\\saveConfig.xml");
     static File autoLinkingFile = new File("C:\\Temp\\ZSchedule\\files\\autoLinkConfig.txt");
+    static File shortSchoolFile = new File("C:\\Temp\\ZSchedule\\files\\shortSchool.xml");
+    static File ringingFile = new File("C:\\Temp\\ZSchedule\\files\\ringing.wav");
 
     static JLabel lb1 = new JLabel("", SwingConstants.CENTER);
     static JButton classes = new JButton(nowClassBasic);
@@ -36,8 +37,7 @@ public class mkGUI extends JFrame {
     static boolean[] changeAble = new boolean[URLs.length];
     static String[] subjectNames = {"MeetEnd", "Kor", "Math", "Eng", "SinceB", "History", "PE", "Chin", "Music", "Moral", "Home", "Techno", "CEA", "SinceA", "Sports"};
 
-    static int studyTime = 40;
-    static int breakTime = 15;
+    static String[] times = new String[2]; // break,study
 
     static MenuItem openItem = new MenuItem("Open");
     static MenuItem hideItem = new MenuItem("Hide");
@@ -47,18 +47,10 @@ public class mkGUI extends JFrame {
     static Thread thread = new Thread(new ThreadWithRunnable());
 
     public mkGUI() throws ParserConfigurationException, IOException, SAXException, AWTException {
-        shortDay.setMargin(new Insets(2, -30, 2, 2));
-        edit.setMargin(new Insets(2, -30, 2, 2));
-        shortDayBreakTime.setMargin(new Insets(2, -30, 2, 2));
-        shortDayStudyTime.setMargin(new Insets(2, -30, 2, 2));
-        shortDay.add(shortDayBreakTime);
-        shortDay.add(shortDayStudyTime);
-        menu.add(edit);
-        menu.add(shortDay);
-        mb.add(menu);
-        edit.addMouseListener(new MouseEvents());
-        shortDayBreakTime.addMouseListener(new MouseEvents());
-        shortDayStudyTime.addMouseListener(new MouseEvents());
+        for (int i = 0; i < times.length; i++) {
+            XMLManage.XMLReader(shortSchoolFile.getPath(), times, i);
+            System.out.println(times[i]);
+        }
         for (int i = 0; i < URLs.length; i++) {
             changeAble[i] = Boolean.parseBoolean(XMLManage.XMLReader(saveConfig.getPath(), URLs, i));
             XMLManage.XMLReader(saveConfig.getPath(), URLs, i);
@@ -69,11 +61,7 @@ public class mkGUI extends JFrame {
             }
             BufferWriteTry(Integer.toString(temp1.date), file);
         }
-        ButtonDefaultSet(140, 160, 350, 40, classes, "linking");
-        lb1.setFont(new Font("", Font.PLAIN, 50));
-        autoLinking.setBounds(540, 0, 100, 15);
         setFrameOptions(f);
-
         manyIF.nowClass(lb1);
         autoLinking.addItemListener(new ItemEvents());
         if(autoLinking.isSelected()) {
@@ -134,13 +122,12 @@ public class mkGUI extends JFrame {
             if (result.matches("-?\\d+")) {
                 return Integer.parseInt(result);
             } else {
-                mkJOptionPane("정수를 입력해 주세요", "Notification");
+                mkJOptionPane("숫자를 입력해 주세요", "Notification");
                 mkJOptionPane(showMsg);
             }
         }
         return 0;
     }
-
     public static void ButtonDefaultSet(int x, int y, int width, int height, JButton btn, String toolTipText) {
         btn.setBounds(x, y ,width, height);
         btn.setBorderPainted(false);
@@ -166,6 +153,21 @@ public class mkGUI extends JFrame {
         return str;
     }
     public static void setFrameOptions(JFrame f) {
+        shortDay.setMargin(new Insets(2, -25, 2, 2));
+        edit.setMargin(new Insets(2, -25, 2, 2));
+        shortDayBreakTime.setMargin(new Insets(2, -25, 2, 2));
+        shortDayStudyTime.setMargin(new Insets(2, -25, 2, 2));
+        shortDay.add(shortDayBreakTime);
+        shortDay.add(shortDayStudyTime);
+        menu.add(edit);
+        menu.add(shortDay);
+        mb.add(menu);
+        edit.addMouseListener(new MouseEvents());
+        shortDayBreakTime.addMouseListener(new MouseEvents());
+        shortDayStudyTime.addMouseListener(new MouseEvents());
+        ButtonDefaultSet(140, 160, 350, 40, classes, "linking");
+        lb1.setFont(new Font("", Font.PLAIN, 50));
+        autoLinking.setBounds(540, 0, 100, 15);
         f.getContentPane().add(autoLinking);
         f.getContentPane().add(lb1);
         f.getContentPane().add(classes);
@@ -176,6 +178,17 @@ public class mkGUI extends JFrame {
         f.getContentPane().setBackground(new Color(245, 245, 245, 255));
         f.setJMenuBar(mb);
         f.setVisible(true);
+    }
+    public static void shortSchoolXmlWrite() {
+        try {
+            XMLManage.XMLWriter(shortSchoolFile,
+                    "shortSchool",
+                    new String[]{"breakTime", "studyTime"},
+                    times,
+                    false, null);
+        } catch (ParserConfigurationException | TransformerException ex) {
+            ex.printStackTrace();
+        }
     }
     public static class MouseEvents implements MouseListener {
         @Override
@@ -206,9 +219,23 @@ public class mkGUI extends JFrame {
                 e1.printStackTrace();
             }
             } else if(e.getSource() == shortDayBreakTime) {
-                breakTime = mkJOptionPane("쉬는시간이 몇 분인지 입력해 주세요");
+                times[0] = String.valueOf(mkJOptionPane("쉬는시간이 몇 분인지 입력해 주세요"));
+                shortSchoolXmlWrite();
+                try {
+                    Runtime.getRuntime().exec("C:\\Temp\\ZSchedule\\ZSchedule.exe");
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                System.exit(0);
             } else if(e.getSource() == shortDayStudyTime) {
-                studyTime = mkJOptionPane("수업시간이 몇 분인지 입력해 주세요");
+                times[1] = String.valueOf(mkJOptionPane("수업시간이 몇 분인지 입력해 주세요"));
+                shortSchoolXmlWrite();
+                try {
+                    Runtime.getRuntime().exec("C:\\Temp\\ZSchedule\\ZSchedule.exe");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                System.exit(0);
             }
         }
     }
@@ -234,7 +261,12 @@ public class mkGUI extends JFrame {
     public static class ThreadWithRunnable implements Runnable {
         @Override
         public void run() {
-            while (!manyIF.autoLinkingIF(URLs))
+            while (true){
+                if(manyIF.autoLinkingIF(URLs)) {
+                    break;
+                }
+            }
+            new Sound(ringingFile);
             Thread.currentThread().interrupt();
         }
     }
@@ -253,10 +285,10 @@ public class mkGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == openItem) {
-                mkGUI.f.setVisible(true);
+                f.setVisible(true);
             }
             if(e.getSource() == hideItem) {
-                mkGUI.f.setVisible(false);
+                f.setVisible(false);
             }
             if(e.getSource() == exitItem) {
                 System.exit(0);

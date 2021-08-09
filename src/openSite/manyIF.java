@@ -11,8 +11,8 @@ import static openSite.mkGUI.mkJOptionPane;
 
 public class manyIF extends JOptionPane {
     static int now = temp1.now;
-    static int breakTimeReduced = 15 - mkGUI.breakTime;
-    static int studyTimeReduced = 15 - mkGUI.studyTime;
+    static int breakTimeReduced = 15 - Integer.parseInt(mkGUI.times[0]);
+    static int studyTimeReduced = 40 - Integer.parseInt(mkGUI.times[1]);
     static int allReduced = breakTimeReduced + studyTimeReduced;
     static void manyIFNowClass(String[] URLs) {
         switch (temp1.date) {
