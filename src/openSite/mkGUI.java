@@ -47,6 +47,7 @@ public class mkGUI extends JFrame {
     static Thread thread = new Thread(new ThreadWithRunnable());
 
     public mkGUI() throws ParserConfigurationException, IOException, SAXException, AWTException {
+        new Sound(ringingFile);
         for (int i = 0; i < times.length; i++) {
             XMLManage.XMLReader(shortSchoolFile.getPath(), times, i);
             System.out.println(times[i]);
@@ -190,6 +191,14 @@ public class mkGUI extends JFrame {
             ex.printStackTrace();
         }
     }
+    public static void restart() {
+        try {
+            Runtime.getRuntime().exec("C:\\Temp\\ZSchedule\\ZSchedule.exe");
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        System.exit(0);
+    }
     public static class MouseEvents implements MouseListener {
         @Override
         public void mouseClicked(MouseEvent e) {}
@@ -221,21 +230,11 @@ public class mkGUI extends JFrame {
             } else if(e.getSource() == shortDayBreakTime) {
                 times[0] = String.valueOf(mkJOptionPane("쉬는시간이 몇 분인지 입력해 주세요"));
                 shortSchoolXmlWrite();
-                try {
-                    Runtime.getRuntime().exec("C:\\Temp\\ZSchedule\\ZSchedule.exe");
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-                System.exit(0);
+                restart();
             } else if(e.getSource() == shortDayStudyTime) {
                 times[1] = String.valueOf(mkJOptionPane("수업시간이 몇 분인지 입력해 주세요"));
                 shortSchoolXmlWrite();
-                try {
-                    Runtime.getRuntime().exec("C:\\Temp\\ZSchedule\\ZSchedule.exe");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                System.exit(0);
+                restart();
             }
         }
     }
@@ -248,13 +247,8 @@ public class mkGUI extends JFrame {
                 } else {
                     BufferWriteTry("false", autoLinkingFile);
                 }
-                try {
-                    Runtime.getRuntime().exec("C:\\Temp\\ZSchedule\\ZSchedule.exe");
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
                 TrayDemo.tray.remove(TrayDemo.trayIcon);
-                System.exit(0);
+                restart();
             }
         }
     }
