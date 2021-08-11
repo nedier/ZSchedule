@@ -12,45 +12,41 @@ import java.io.*;
 public class mkGUI extends JFrame {
 
     static JFrame f = new JFrame("  ZSchedule ver 0.0.3");
-
     static ImageIcon nowClassBasic = new ImageIcon("C:\\Temp\\ZSchedule\\images\\classes.png");
     static ImageIcon nowClassEnter = new ImageIcon("C:\\Temp\\ZSchedule\\images\\classesEnter.png");
-
     static File file = new File("C:\\Temp\\ZSchedule\\files\\clearDay.txt");
     static File saveConfig = new File("C:\\Temp\\ZSchedule\\files\\saveConfig.xml");
     static File autoLinkingFile = new File("C:\\Temp\\ZSchedule\\files\\autoLinkConfig.txt");
     static File shortSchoolFile = new File("C:\\Temp\\ZSchedule\\files\\shortSchool.xml");
     static File ringingFile = new File("C:\\Temp\\ZSchedule\\files\\ringing.wav");
-
+    static File connectTimeFile = new File("C:\\Temp\\ZSchedule\\files\\setting.xml");
     static JLabel lb1 = new JLabel("", SwingConstants.CENTER);
     static JButton classes = new JButton(nowClassBasic);
     static JToolBar bar = new JToolBar();
     static JCheckBox autoLinking = new JCheckBox("자동 연결", Boolean.parseBoolean(fileRead(autoLinkingFile)));
     static JMenuBar mb = new JMenuBar();
-    static JMenu menu = new JMenu("Edit");
-    static JMenu shortDay = new JMenu("단축수업");
-    static JMenuItem edit = new JMenuItem("링크");
+    static JMenu editMenu = new JMenu("Edit");
+    static JMenu settingMenu = new JMenu("Setting");
+    static JMenu edit = new JMenu("링크");
+    static JMenu shortDay = new JMenu("수업시간");
+    static JMenu alarmTime = new JMenu("기능");
     static JMenuItem shortDayBreakTime = new JMenuItem("쉬는시간");
     static JMenuItem shortDayStudyTime = new JMenuItem("수업시간");
-
     static String[] URLs = new String[15];
     static boolean[] changeAble = new boolean[URLs.length];
     static String[] subjectNames = {"MeetEnd", "Kor", "Math", "Eng", "SinceB", "History", "PE", "Chin", "Music", "Moral", "Home", "Techno", "CEA", "SinceA", "Sports"};
-
     static String[] times = new String[2]; // break,study
-
+    static int connectTime;
     static MenuItem openItem = new MenuItem("Open");
     static MenuItem hideItem = new MenuItem("Hide");
     static MenuItem exitItem = new MenuItem("Exit");
-
     final static PopupMenu popup = new PopupMenu();
     static Thread thread = new Thread(new ThreadWithRunnable());
 
     public mkGUI() throws ParserConfigurationException, IOException, SAXException, AWTException {
-        new Sound(ringingFile);
+        connectTime = Integer.parseInt(XMLManage.XMLReader(connectTimeFile.getPath(), 0));
         for (int i = 0; i < times.length; i++) {
             XMLManage.XMLReader(shortSchoolFile.getPath(), times, i);
-            System.out.println(times[i]);
         }
         for (int i = 0; i < URLs.length; i++) {
             changeAble[i] = Boolean.parseBoolean(XMLManage.XMLReader(saveConfig.getPath(), URLs, i));
@@ -63,22 +59,11 @@ public class mkGUI extends JFrame {
             BufferWriteTry(Integer.toString(temp1.date), file);
         }
         setFrameOptions(f);
-        manyIF.nowClass(lb1);
-        autoLinking.addItemListener(new ItemEvents());
-        if(autoLinking.isSelected()) {
-            lb1.setBounds(0, 130, 640, 50);
-            classes.setVisible(false);
-            TrayDemo.TrayDemoDefault();
-            // new TrayDemo("자동연결이 활성화 되었습니다 (클릭하여 숨기기)", false, f);
-        } else {
-            lb1.setBounds(0, 80, 640, 50);
-            classes.setVisible(true);
-        }
+        TrayDemo.TrayDemoDefault();
         if(autoLinking.isSelected()) {
             thread.start();
         }
     }
-
     public static void BufferWriteTry(String index, File target) {
         try{
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(target));
@@ -94,7 +79,6 @@ public class mkGUI extends JFrame {
             e.printStackTrace();
         }
     }
-
     public static void mkJOptionPane(String showMsg, String[] target, int i) {
         String index = JOptionPane.showInputDialog(showMsg);
         if (index == null) {
@@ -160,15 +144,27 @@ public class mkGUI extends JFrame {
         shortDayStudyTime.setMargin(new Insets(2, -25, 2, 2));
         shortDay.add(shortDayBreakTime);
         shortDay.add(shortDayStudyTime);
-        menu.add(edit);
-        menu.add(shortDay);
-        mb.add(menu);
+        editMenu.add(edit);
+        editMenu.add(shortDay);
+        settingMenu.add(alarmTime);
+        mb.add(editMenu);
+        mb.add(settingMenu);
         edit.addMouseListener(new MouseEvents());
         shortDayBreakTime.addMouseListener(new MouseEvents());
         shortDayStudyTime.addMouseListener(new MouseEvents());
+        alarmTime.addMouseListener(new MouseEvents());
         ButtonDefaultSet(140, 160, 350, 40, classes, "linking");
         lb1.setFont(new Font("", Font.PLAIN, 50));
+        manyIF.nowClass(lb1);
         autoLinking.setBounds(540, 0, 100, 15);
+        autoLinking.addItemListener(new ItemEvents());
+        if(autoLinking.isSelected()) {
+            lb1.setBounds(0, 130, 640, 50);
+            classes.setVisible(false);
+        } else {
+            lb1.setBounds(0, 80, 640, 50);
+            classes.setVisible(true);
+        }
         f.getContentPane().add(autoLinking);
         f.getContentPane().add(lb1);
         f.getContentPane().add(classes);
@@ -223,7 +219,7 @@ public class mkGUI extends JFrame {
                 System.exit(0);
             } else if(e.getSource() == edit) {
             try {
-                mkEditor.mkUI(URLs, saveConfig, "saveConfig", subjectNames, true, f);
+                mkEditorTap.mkEditor(URLs, saveConfig, "saveConfig", subjectNames, true, f);
             } catch (ParserConfigurationException | SAXException | IOException e1) {
                 e1.printStackTrace();
             }
@@ -235,6 +231,8 @@ public class mkGUI extends JFrame {
                 times[1] = String.valueOf(mkJOptionPane("수업시간이 몇 분인지 입력해 주세요"));
                 shortSchoolXmlWrite();
                 restart();
+            } else if(e.getSource() == alarmTime) {
+                mkSettingTap.mkSetting(f, connectTime, connectTimeFile);
             }
         }
     }
@@ -256,7 +254,7 @@ public class mkGUI extends JFrame {
         @Override
         public void run() {
             while (true){
-                if(manyIF.autoLinkingIF(URLs)) {
+                if(manyIF.autoLinkingIF(URLs, connectTime)) {
                     break;
                 }
             }

@@ -225,132 +225,132 @@ public class manyIF extends JOptionPane {
             jL.setText("조회 종례");
         }
     }
-    public static boolean autoLinkingIF(String[] URLs) {
-        int innerNow = Integer.parseInt(LocalTime.now().getHour()
+    public static boolean autoLinkingIF(String[] URLs, int shortenedTime) {
+        int innerNow = Integer.parseInt((LocalTime.now().getHour() == 0 ? "12" : LocalTime.now().getHour())
                 + (LocalTime.now().getMinute() < 10 ? "0" + LocalTime.now().getMinute() : String.valueOf(LocalTime.now().getMinute())));
         switch (temp1.date) {
             case 1 -> {
-                if(innerNow == 845 - breakTimeReduced || innerNow == 1440 - allReduced) {
+                if(innerNow == 845 - breakTimeReduced - shortenedTime || innerNow == 1440 - allReduced - shortenedTime) {
                     desktopView(URLs[0]);
                     return true;
-                } else if(innerNow == 930 - allReduced) {
+                } else if(innerNow == 930 - (allReduced + shortenedTime)) {
                     desktopView(URLs[4]);
                     return true;
-                } else if(innerNow == 1025 - allReduced) {
+                } else if(innerNow == 1025 - allReduced - shortenedTime) {
                     desktopView(URLs[7]);
                     return true;
-                } else if(innerNow == 1120 - allReduced) {
+                } else if(innerNow == 1120 - allReduced - shortenedTime) {
                     desktopView(URLs[1]);
                     return true;
-                } else if(innerNow == 1215 - allReduced) {
+                } else if(innerNow == 1215 - (allReduced + shortenedTime)) {
                     desktopView(URLs[5]);
                     return true;
-                } else if(innerNow == 1340 - allReduced) {
+                } else if(innerNow == 1340 - allReduced - shortenedTime) {
                     desktopView(URLs[2]);
                     return true;
-                } else if(innerNow == 1435 - allReduced) {
+                } else if(innerNow == 1435 - allReduced - shortenedTime) {
                     desktopView(URLs[10]);
                     return true;
                 }
             }
             case 2 -> {
-                if(innerNow == 845 - breakTimeReduced|| innerNow == 1535 - allReduced) {
+                if(innerNow == 845 - breakTimeReduced - shortenedTime|| innerNow == 1535 - allReduced - shortenedTime) {
                     desktopView(URLs[0]);
                     return true;
-                } else if(innerNow == 930 - allReduced) {
+                } else if(innerNow == 930 - allReduced - shortenedTime) {
                     desktopView(URLs[6]);
                     return true;
-                } else if(innerNow == 1025 - allReduced) {
+                } else if(innerNow == 1025 - allReduced - shortenedTime) {
                     desktopView(URLs[2]);
                     return true;
-                } else if(innerNow == 1120 - allReduced) {
+                } else if(innerNow == 1120 - allReduced - shortenedTime) {
                     desktopView(URLs[1]);
                     return true;
-                } else if(innerNow == 1215 - allReduced) {
+                } else if(innerNow == 1215 - allReduced - shortenedTime) {
                     desktopView(URLs[3]);
                     return true;
-                } else if(innerNow == 1340 - allReduced) {
+                } else if(innerNow == 1340 - allReduced - shortenedTime) {
                     desktopView(URLs[10]);
                     return true;
-                } else if(innerNow == 1435 - allReduced) {
+                } else if(innerNow == 1435 - allReduced - shortenedTime) {
                     desktopView(URLs[12]);
                     return true;
-                } else if(innerNow == 1530 - allReduced) {
+                } else if(innerNow == 1530 - allReduced - shortenedTime) {
                     desktopView(URLs[5]);
                     return true;
                 }
             }
             case 3 -> {
-                if(innerNow == 845 - breakTimeReduced|| innerNow == 1535 - allReduced) {
+                if(innerNow == 845 - breakTimeReduced - shortenedTime|| innerNow == 1535 - allReduced - shortenedTime) {
                     desktopView(URLs[0]);
                     return true;
-                } else if(innerNow == 930 - allReduced) {
+                } else if(innerNow == 930 - allReduced - shortenedTime) {
                     desktopView(URLs[3]);
                     return true;
-                } else if(innerNow == 1025 - allReduced) {
+                } else if(innerNow == 1025 - allReduced - shortenedTime) {
                     desktopView(URLs[2]);
                     return true;
-                } else if(innerNow == 1120 - allReduced) {
+                } else if(innerNow == 1120 - allReduced - shortenedTime) {
                     desktopView(URLs[13]);
                     return true;
-                } else if(innerNow == 1215 - allReduced) {
+                } else if(innerNow == 1215 - allReduced - shortenedTime) {
                     desktopView(URLs[14]);
                     return true;
-                } else if(innerNow == 1340 - allReduced) {
+                } else if(innerNow == 1340 - allReduced - shortenedTime) {
                     desktopView(URLs[1]);
                     return true;
-                } else if(innerNow == 1435 - allReduced) {
+                } else if(innerNow == 1435 - allReduced - shortenedTime) {
                     desktopView(URLs[8]);
                     return true;
-                } else if(innerNow == 1530 - allReduced) {
+                } else if(innerNow == 1530 - allReduced - shortenedTime) {
                     desktopView(URLs[9]);
                     return true;
                 }
             }
             case 4 -> {
-                if(innerNow == 845 - breakTimeReduced|| innerNow == 1440 - allReduced) {
+                if(innerNow == 845 - breakTimeReduced - shortenedTime|| innerNow == 1440 - allReduced - shortenedTime) {
                     desktopView(URLs[0]);
                     return true;
-                } else if(innerNow == 930 - allReduced) {
+                } else if(innerNow == 930 - allReduced - shortenedTime) {
                     desktopView(URLs[6]);
                     return true;
-                } else if(innerNow == 1025 - allReduced) {
+                } else if(innerNow == 1025 - allReduced - shortenedTime) {
                     desktopView(URLs[13]);
                     return true;
-                } else if(innerNow == 1120 - allReduced) {
+                } else if(innerNow == 1120 - allReduced - shortenedTime) {
                     desktopView(URLs[5]);
                     return true;
-                } else if(innerNow == 1215 - allReduced) {
+                } else if(innerNow == 1215 - allReduced - shortenedTime) {
                     desktopView(URLs[2]);
                     return true;
-                } else if(innerNow == 1340 - allReduced) {
+                } else if(innerNow == 1340 - allReduced - shortenedTime) {
                     desktopView(URLs[7]);
                     return true;
-                } else if(innerNow == 1435 - allReduced) {
+                } else if(innerNow == 1435 - allReduced - shortenedTime) {
                     desktopView(URLs[3]);
                     return true;
                 }
             }
             case 5 -> {
-                if(innerNow == 845 - breakTimeReduced || innerNow == 1440 - allReduced) {
+                if(innerNow == 845 - breakTimeReduced - shortenedTime || innerNow == 1440 - allReduced - shortenedTime) {
                     desktopView(URLs[0]);
                     return true;
-                } else if(innerNow == 930 - allReduced) {
+                } else if(innerNow == 930 - allReduced - shortenedTime) {
                     desktopView(URLs[1]);
                     return true;
-                } else if(innerNow == 1025 - allReduced) {
+                } else if(innerNow == 1025 - allReduced - shortenedTime) {
                     desktopView(URLs[11]);
                     return true;
-                } else if(innerNow == 1120 - allReduced) {
+                } else if(innerNow == 1120 - allReduced - shortenedTime) {
                     desktopView(URLs[9]);
                     return true;
-                } else if(innerNow == 1215 - allReduced) {
+                } else if(innerNow == 1215 - allReduced - shortenedTime) {
                     desktopView(URLs[6]);
                     return true;
-                } else if(innerNow == 1340 - allReduced) {
+                } else if(innerNow == 1340 - allReduced - shortenedTime) {
                     desktopView(URLs[8]);
                     return true;
-                } else if(innerNow == 1435 - allReduced) {
+                } else if(innerNow == 1435 - allReduced - shortenedTime) {
                     desktopView(URLs[13]);
                     return true;
                 }

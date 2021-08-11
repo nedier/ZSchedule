@@ -54,11 +54,8 @@ public class XMLManage {
     public static String ReadFile(NodeList children, int i, String[] arrays) {
         String changeAble;
         int index = i;
-        if(index == 0) {
-            index = 1;
-        } else {
-            index = index * 2 + 1;
-        }
+        if(index == 0) {index = 1;}
+        else {index = index * 2 + 1;}
         Node node = children.item(index);
         if (node.getNodeType() == Node.ELEMENT_NODE) {
             Element ele = (Element) node;
@@ -71,15 +68,43 @@ public class XMLManage {
         }
         return null;
     }
+    public static String ReadFile(NodeList children, int i) {
+        String changeAble;
+        int index = i;
+        if(index == 0) {
+            index = 1;
+        } else {
+            index = index * 2 + 1;
+        }
+        Node node = children.item(index);
+        if (node.getNodeType() == Node.ELEMENT_NODE) {
+            Element ele = (Element) node;
+            if(ele.getAttribute("change").equals("true") || ele.getAttribute("change").equals("false")) {
+                changeAble = ele.getAttribute("change");
+                return changeAble;
+            }
+            return ele.getTextContent();
+        }
+        return null;
+    }
     public static String XMLReader(String path, String[] Arrays, int index) throws ParserConfigurationException, SAXException, IOException {
         String Ables;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = factory.newDocumentBuilder();
         Document document = documentBuilder.parse(path);
         Element root = document.getDocumentElement();
-
         NodeList children = root.getChildNodes();
         Ables = ReadFile(children, index, Arrays);
+        return Ables;
+    }
+    public static String XMLReader(String path, int index) throws ParserConfigurationException, SAXException, IOException {
+        String Ables;
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+        Document document = documentBuilder.parse(path);
+        Element root = document.getDocumentElement();
+        NodeList children = root.getChildNodes();
+        Ables = ReadFile(children, index);
         return Ables;
     }
 }

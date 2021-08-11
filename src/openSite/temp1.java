@@ -17,7 +17,7 @@ public class temp1 extends JFrame{
     public static int date = LocalDate.now().getDayOfWeek().getValue();
     public static int min = LocalTime.now().getMinute();
     public static int hour = LocalTime.now().getHour();
-    public static int now =  Integer.parseInt(hour + (min < 10 ? "0" + min : String.valueOf(min)));
+    public static int now =  Integer.parseInt((hour == 0 ? "12" : hour) + (min < 10 ? "0" + min : String.valueOf(min)));
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, AWTException {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

@@ -9,11 +9,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class mkEditor {
+public class mkEditorTap {
     static JFrame frame= new JFrame();
-    static JPanel mainPanel = new JPanel();
     static boolean[] changeAble = new boolean[15];
-    static JPanel headingPanel = new JPanel();
     static JPanel panel = new JPanel(new GridBagLayout());
     static JButton OKButton = new JButton("OK");
     static JButton CancelButton = new JButton("Cancel");
@@ -24,11 +22,10 @@ public class mkEditor {
     static JCheckBox[] toChangeAtt = new JCheckBox[15];
     static File file = new File("C:\\Temp\\ZSchedule\\files\\saveConfig.xml");
 
-    public static void mkUI(String[] URLs, File saveConfig, String txt, String[] subjectNames, boolean AttAble, JFrame f) throws ParserConfigurationException, IOException, SAXException {
+    public static void mkEditor(String[] URLs, File saveConfig, String txt, String[] subjectNames, boolean AttAble, JFrame f) throws ParserConfigurationException, IOException, SAXException {
         frame.setTitle("link edit");
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         construe.insets = new Insets(5, 5, 5, 5);
-        construe.anchor = GridBagConstraints.WEST;
+        construe.anchor = GridBagConstraints.CENTER;
         construe.gridx=0;
         construe.gridy=0;
         for (int i = 0; i < subjects.length; i++) {
@@ -44,7 +41,6 @@ public class mkEditor {
             panel.add(toChangeAtt[i], construe);
             construe.gridx=0; construe.gridy=i+1;
         }
-        construe.anchor = GridBagConstraints.CENTER;
 
         OKButton.addActionListener(e -> {
             for (int i = 0; i < subjects.length; i++) {
@@ -56,6 +52,7 @@ public class mkEditor {
             } catch (ParserConfigurationException | TransformerException e1) {
                 e1.printStackTrace();
             }
+            TrayDemo.tray.remove(TrayDemo.trayIcon);
             frame.dispose();
             f.dispose();
             try {
@@ -69,14 +66,12 @@ public class mkEditor {
         panel.add(OKButton, construe);
         construe.gridx=2;
         panel.add(CancelButton, construe);
-        mainPanel.add(headingPanel);
-        mainPanel.add(panel);
 
-        frame.add(mainPanel);
-        frame.pack();
+        frame.add(panel);
         frame.setSize(400, 600);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
         frame.setVisible(true);
     }
 }
