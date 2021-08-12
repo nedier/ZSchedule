@@ -7,7 +7,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalTime;
 import java.util.Arrays;
-
 import static openSite.mkGUI.mkJOptionPane;
 
 public class manyIF extends JOptionPane {
@@ -140,7 +139,7 @@ public class manyIF extends JOptionPane {
                 }
             }
             default -> {
-                mkJOptionPane("휴일이거나 버그", "Notification");
+                mkJOptionPane("휴일이거나 버그", "Notification", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
         }
@@ -381,7 +380,7 @@ public class manyIF extends JOptionPane {
                 }
             }
             default -> {
-                mkJOptionPane("휴일이거나 버그", "Notification");
+                mkJOptionPane("휴일이거나 버그", "Notification", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
         }

@@ -9,7 +9,7 @@ import java.io.File;
 public class mkSettingTap {
     static JFrame frame = new JFrame();
     static JPanel panel = new JPanel(new GridBagLayout());
-    static JLabel[] text = new JLabel[]{new JLabel("오픈시간"), new JLabel("                |"), new JLabel("분 전에 오픈    ")};
+    static JLabel[] text = new JLabel[]{new JLabel("오픈시간"), new JLabel("                |"), new JLabel("분 전에 오픈")};
     static JTextField tf = new JTextField(5);
     static JButton resetButton = new JButton("Reset");
     static JButton OKButton = new JButton("OK");
@@ -32,6 +32,7 @@ public class mkSettingTap {
         construe.gridx=2;
         panel.add(text[2], construe);
         construe.gridx=3;
+        construe.insets = new Insets(5, 40, 5, 5);
         panel.add(resetButton, construe);
         construe.gridy=1;
         construe.gridx=0;
@@ -46,6 +47,10 @@ public class mkSettingTap {
         frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
+        resetButton.addActionListener(e -> {
+            mkGUI.mkJOptionPane("정말로 초기화 하시겠습니까?", "Notification", JOptionPane.OK_CANCEL_OPTION);
+            tf.setText(String.valueOf(connectTime));
+        });
         OKButton.addActionListener(e -> {
             s[0] = tf.getText();
             try {

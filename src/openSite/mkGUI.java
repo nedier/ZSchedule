@@ -10,7 +10,6 @@ import java.awt.event.*;
 import java.io.*;
 
 public class mkGUI extends JFrame {
-
     static JFrame f = new JFrame("  ZSchedule ver 0.0.3");
     static ImageIcon nowClassBasic = new ImageIcon("C:\\Temp\\ZSchedule\\images\\classes.png");
     static ImageIcon nowClassEnter = new ImageIcon("C:\\Temp\\ZSchedule\\images\\classesEnter.png");
@@ -49,6 +48,7 @@ public class mkGUI extends JFrame {
             XMLManage.XMLReader(shortSchoolFile.getPath(), times, i);
             System.out.println(times[i]);
         }
+        new Sound(ringingFile);
         for (int i = 0; i < URLs.length; i++) {
             changeAble[i] = Boolean.parseBoolean(XMLManage.XMLReader(saveConfig.getPath(), URLs, i));
             XMLManage.XMLReader(saveConfig.getPath(), URLs, i);
@@ -98,8 +98,8 @@ public class mkGUI extends JFrame {
             }
         }
     }
-    public static void mkJOptionPane(String showMsg, String title) {
-        JOptionPane.showMessageDialog(null, showMsg, title, JOptionPane.ERROR_MESSAGE);
+    public static void mkJOptionPane(String showMsg, String title, int option) {
+        JOptionPane.showMessageDialog(null, showMsg, title, option);
     }
     public static int mkJOptionPane(String showMsg) {
         String result = JOptionPane.showInputDialog(showMsg);
@@ -109,7 +109,7 @@ public class mkGUI extends JFrame {
             if (result.matches("-?\\d+")) {
                 return Integer.parseInt(result);
             } else {
-                mkJOptionPane("숫자를 입력해 주세요", "Notification");
+                mkJOptionPane("숫자를 입력해 주세요", "Notification", JOptionPane.ERROR_MESSAGE);
                 mkJOptionPane(showMsg);
             }
         }
