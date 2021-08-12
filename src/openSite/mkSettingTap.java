@@ -1,25 +1,22 @@
 package openSite;
 
-import org.xml.sax.SAXException;
-
 import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 
 public class mkSettingTap {
     static JFrame frame = new JFrame();
     static JPanel panel = new JPanel(new GridBagLayout());
-    static JLabel[] text = new JLabel[]{new JLabel("오픈시간"), new JLabel("                |"), new JLabel("분 전에 오픈")};
+    static JLabel[] text = new JLabel[]{new JLabel("오픈시간"), new JLabel("                |"), new JLabel("분 전에 오픈    ")};
     static JTextField tf = new JTextField(5);
     static JButton resetButton = new JButton("Reset");
     static JButton OKButton = new JButton("OK");
     static JButton CancelButton = new JButton("Cancel");
     static GridBagConstraints construe = new GridBagConstraints();
 
-    public static void mkSetting(JFrame f, int connectTime, File file) {
+    public static void mkSetting(int connectTime, File file) {
         final String[] s = new String[]{String.valueOf(connectTime)};
         resetButton.setFont(new Font("", Font.BOLD, 10));
         text[1].setSize(10, 10);
@@ -43,7 +40,7 @@ public class mkSettingTap {
         panel.add(CancelButton, construe);
         frame.add(panel);
         frame.setTitle("set");
-        frame.setSize(600, 600);
+        frame.setSize(1000, 1000);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setResizable(false);
@@ -56,14 +53,7 @@ public class mkSettingTap {
             } catch (ParserConfigurationException | TransformerException ex) {
                 ex.printStackTrace();
             }
-            TrayDemo.tray.remove(TrayDemo.trayIcon);
-            frame.dispose();
-            f.dispose();
-            try {
-                new mkGUI();
-            } catch (ParserConfigurationException | IOException | SAXException | AWTException e1) {
-                e1.printStackTrace();
-            }
+            mkGUI.restart();
         });
         CancelButton.addActionListener(e -> frame.dispose());
     }

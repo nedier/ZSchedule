@@ -22,7 +22,7 @@ public class mkEditorTap {
     static JCheckBox[] toChangeAtt = new JCheckBox[15];
     static File file = new File("C:\\Temp\\ZSchedule\\files\\saveConfig.xml");
 
-    public static void mkEditor(String[] URLs, File saveConfig, String txt, String[] subjectNames, boolean AttAble, JFrame f) throws ParserConfigurationException, IOException, SAXException {
+    public static void mkEditor(String[] URLs, File saveConfig, String txt, String[] subjectNames, boolean AttAble) throws ParserConfigurationException, IOException, SAXException {
         frame.setTitle("link edit");
         construe.insets = new Insets(5, 5, 5, 5);
         construe.anchor = GridBagConstraints.CENTER;
@@ -52,14 +52,7 @@ public class mkEditorTap {
             } catch (ParserConfigurationException | TransformerException e1) {
                 e1.printStackTrace();
             }
-            TrayDemo.tray.remove(TrayDemo.trayIcon);
-            frame.dispose();
-            f.dispose();
-            try {
-                new mkGUI();
-            } catch (ParserConfigurationException | IOException | SAXException | AWTException e1) {
-                e1.printStackTrace();
-            }
+            mkGUI.restart();
         });
         CancelButton.addActionListener(e -> frame.dispose());
         construe.gridx=1;

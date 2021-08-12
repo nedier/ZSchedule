@@ -47,6 +47,7 @@ public class mkGUI extends JFrame {
         connectTime = Integer.parseInt(XMLManage.XMLReader(connectTimeFile.getPath(), 0));
         for (int i = 0; i < times.length; i++) {
             XMLManage.XMLReader(shortSchoolFile.getPath(), times, i);
+            System.out.println(times[i]);
         }
         for (int i = 0; i < URLs.length; i++) {
             changeAble[i] = Boolean.parseBoolean(XMLManage.XMLReader(saveConfig.getPath(), URLs, i));
@@ -60,6 +61,7 @@ public class mkGUI extends JFrame {
         }
         setFrameOptions(f);
         TrayDemo.TrayDemoDefault();
+        new manyIF(connectTime);
         if(autoLinking.isSelected()) {
             thread.start();
         }
@@ -142,6 +144,7 @@ public class mkGUI extends JFrame {
         edit.setMargin(new Insets(2, -25, 2, 2));
         shortDayBreakTime.setMargin(new Insets(2, -25, 2, 2));
         shortDayStudyTime.setMargin(new Insets(2, -25, 2, 2));
+        alarmTime.setMargin(new Insets(2, -25, 2, 2));
         shortDay.add(shortDayBreakTime);
         shortDay.add(shortDayStudyTime);
         editMenu.add(edit);
@@ -170,6 +173,7 @@ public class mkGUI extends JFrame {
         f.getContentPane().add(classes);
         f.setSize(temp1.SCREEN_W, temp1.SCREEN_H);
         f.setLocationRelativeTo(null);
+        f.setResizable(false);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLayout(null);
         f.getContentPane().setBackground(new Color(245, 245, 245, 255));
@@ -219,7 +223,7 @@ public class mkGUI extends JFrame {
                 System.exit(0);
             } else if(e.getSource() == edit) {
             try {
-                mkEditorTap.mkEditor(URLs, saveConfig, "saveConfig", subjectNames, true, f);
+                mkEditorTap.mkEditor(URLs, saveConfig, "saveConfig", subjectNames, true);
             } catch (ParserConfigurationException | SAXException | IOException e1) {
                 e1.printStackTrace();
             }
@@ -232,7 +236,7 @@ public class mkGUI extends JFrame {
                 shortSchoolXmlWrite();
                 restart();
             } else if(e.getSource() == alarmTime) {
-                mkSettingTap.mkSetting(f, connectTime, connectTimeFile);
+                mkSettingTap.mkSetting(connectTime, connectTimeFile);
             }
         }
     }
