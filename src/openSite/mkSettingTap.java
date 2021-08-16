@@ -40,7 +40,6 @@ public class mkSettingTap {
         construe.gridx=1;
         panel.add(CancelButton, construe);
         frame.add(panel);
-        frame.setTitle("set");
         frame.setSize(1000, 1000);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

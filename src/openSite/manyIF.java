@@ -7,6 +7,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.Map;
+
 import static openSite.mkGUI.mkJOptionPane;
 
 public class manyIF extends JOptionPane {
@@ -16,11 +18,24 @@ public class manyIF extends JOptionPane {
     static int allReduced = breakTimeReduced + studyTimeReduced;
     static int[] allTimes = new int[]{845 - breakTimeReduced, 930, 1025, 1120, 1215, 1305, 1340, 1435, 1440, 1530, 1535};
     static int[] shorterAllTimes = new int[10];
-    manyIF(int shortenedTime) {
+    static boolean[] isClass7 = new boolean[5];
+    static String[] saveTimetable = new String[mkGUI.timetable.length];
+    static String[] URLs = new String[mkGUI.timetable.length];
+    manyIF(int shortenedTime, String[] timetable, Map<String, String> nameURL) {
+        saveTimetable = timetable;
+        for (int i = 0; i < isClass7.length; i++) {
+            isClass7[i] = !(timetable[((i + 1) * 7) - 1].equals(""));
+        }
+        for (int i = 0; i < saveTimetable.length; i++) {
+            URLs[i] = nameURL.get(saveTimetable[i]);
+        }
         for (int i = 1; i < allTimes.length; i++) {
-            String[] strArray = new String[]{String.valueOf(allTimes[i]-allReduced), String.valueOf(allTimes[i]).substring(0,1), String.valueOf(allTimes[i]).substring(0,2)};
+            String[] strArray = new String[]{
+                    String.valueOf(allTimes[i]-allReduced),
+                    String.valueOf(allTimes[i]).substring(0,1),
+                    String.valueOf(allTimes[i]).substring(0,2)};
             if(!strArray[0].substring(0,1).equals(strArray[1]) || !strArray[0].substring(0,2).equals(strArray[2])) {
-                allTimes[i] -= allReduced+40;
+                allTimes[i] -= allReduced + 40;
             } else {
                 allTimes[i] -= allReduced;
             }
@@ -28,114 +43,132 @@ public class manyIF extends JOptionPane {
         shorterAllTimes[0] = allTimes[0];
         for (int i = 1; i < shorterAllTimes.length; i++) {
             shorterAllTimes[i]= allTimes[i];
-            String[] strArray = new String[]{String.valueOf(shorterAllTimes[i]-allReduced-shortenedTime), String.valueOf(shorterAllTimes[i]).substring(0,1), String.valueOf(shorterAllTimes[i]).substring(0,2)};
+            String[] strArray = new String[]{
+                    String.valueOf(shorterAllTimes[i]-allReduced-shortenedTime),
+                    String.valueOf(shorterAllTimes[i]).substring(0,1),
+                    String.valueOf(shorterAllTimes[i]).substring(0,2)};
             if(!strArray[0].substring(0,1).equals(strArray[1]) || !strArray[0].substring(0,2).equals(strArray[2])) {
-                shorterAllTimes[i] -= allReduced+shortenedTime+40;
+                shorterAllTimes[i] -= allReduced + shortenedTime + 40;
             } else {
-                shorterAllTimes[i] -= allReduced+shortenedTime;
+                shorterAllTimes[i] -= allReduced + shortenedTime;
             }
         }
-        System.out.println(Arrays.toString(shorterAllTimes));
     }
-    static void manyIFNowClass(String[] URLs) {
+    static void manyIFNowClass() {
         switch (temp1.date) {
             case 1 -> {
-                if(now < allTimes[0] || now > allTimes[8]) {
-                    desktopView(URLs[0]);
+                if(now < allTimes[0]) {
+                    desktopView(mkGUI.URLs[0]);
                 } else if(now < allTimes[1]) {
-                    desktopView(URLs[4]);
+                    desktopView(URLs[0]);
                 } else if(now < allTimes[2]) {
-                    desktopView(URLs[7]);
-                } else if(now < allTimes[3]) {
                     desktopView(URLs[1]);
-                } else if(now < allTimes[5]) {
-                    desktopView(URLs[5]);
-                } else if(now < allTimes[6]) {
+                } else if(now < allTimes[3]) {
                     desktopView(URLs[2]);
+                } else if(now < allTimes[5]) {
+                    desktopView(URLs[3]);
+                } else if(now < allTimes[6]) {
+                    desktopView(URLs[4]);
                 } else if(now < allTimes[7]) {
-                    desktopView(URLs[10]);
-                } else {
-                    System.out.println("BUG");
+                    desktopView(URLs[5]);
+                } else if(now < allTimes[9] && isClass7[0]) {
+                    desktopView(URLs[6]);
+                } else if(now > allTimes[8] && !isClass7[0]) {
+                    desktopView(mkGUI.URLs[0]);
+                } else if(now > allTimes[10] && isClass7[0]) {
+                    desktopView(mkGUI.URLs[0]);
                 }
             }
             case 2 -> {
-                if(now < allTimes[0] || now > allTimes[10]) {
-                    desktopView(URLs[0]);
+                if(now < allTimes[0]) {
+                    desktopView(mkGUI.URLs[0]);
                 } else if(now < allTimes[1]) {
-                    desktopView(URLs[6]);
+                    desktopView(URLs[7]);
                 } else if(now < allTimes[2]) {
-                    desktopView(URLs[2]);
+                    desktopView(URLs[8]);
                 } else if(now < allTimes[3]) {
-                    desktopView(URLs[1]);
+                    desktopView(URLs[9]);
                 } else if(now < allTimes[5]) {
-                    desktopView(URLs[3]);
-                } else if(now < allTimes[6]) {
                     desktopView(URLs[10]);
+                } else if(now < allTimes[6]) {
+                    desktopView(URLs[11]);
                 } else if(now < allTimes[7]) {
                     desktopView(URLs[12]);
-                } else if(now < allTimes[9]) {
-                    desktopView(URLs[5]);
-                } else {
-                    System.out.println("BUG");
+                } else if(now < allTimes[9] && isClass7[1]) {
+                    desktopView(URLs[13]);
+                } else if(now > allTimes[8] && !isClass7[1]) {
+                    desktopView(mkGUI.URLs[0]);
+                } else if(now > allTimes[10] && isClass7[1]) {
+                    desktopView(mkGUI.URLs[0]);
                 }
             }
             case 3 -> {
-                if(now < allTimes[0] || now > allTimes[10]) {
-                    desktopView(URLs[0]);
+                if(now < allTimes[0]) {
+                    desktopView(mkGUI.URLs[0]);
                 } else if(now < allTimes[1]) {
-                    desktopView(URLs[3]);
-                } else if(now < allTimes[2]) {
-                    desktopView(URLs[2]);
-                } else if(now < allTimes[3]) {
-                    desktopView(URLs[13]);
-                } else if(now < allTimes[5]) {
                     desktopView(URLs[14]);
+                } else if(now < allTimes[2]) {
+                    desktopView(URLs[15]);
+                } else if(now < allTimes[3]) {
+                    desktopView(URLs[16]);
+                } else if(now < allTimes[5]) {
+                    desktopView(URLs[17]);
                 } else if(now < allTimes[6]) {
-                    desktopView(URLs[1]);
+                    desktopView(URLs[18]);
                 } else if(now < allTimes[7]) {
-                    desktopView(URLs[8]);
-                } else if(now < allTimes[9]) {
-                    desktopView(URLs[9]);
-                } else {
-                    System.out.println("BUG");
+                    desktopView(URLs[19]);
+                } else if(now < allTimes[9] && isClass7[2]) {
+                    desktopView(URLs[20]);
+                } else if(now > allTimes[8] && !isClass7[2]) {
+                    desktopView(mkGUI.URLs[0]);
+                } else if(now > allTimes[10] && isClass7[2]) {
+                    desktopView(mkGUI.URLs[0]);
                 }
             }
             case 4 -> {
-                if(now < allTimes[0] || now > allTimes[8]) {
-                    desktopView(URLs[0]);
+                if(now < allTimes[0]) {
+                    desktopView(mkGUI.URLs[0]);
                 } else if(now < allTimes[1]) {
-                    desktopView(URLs[6]);
+                    desktopView(URLs[21]);
                 } else if(now < allTimes[2]) {
-                    desktopView(URLs[13]);
+                    desktopView(URLs[22]);
                 } else if(now < allTimes[3]) {
-                    desktopView(URLs[5]);
+                    desktopView(URLs[23]);
                 } else if(now < allTimes[5]) {
-                    desktopView(URLs[2]);
+                    desktopView(URLs[24]);
                 } else if(now < allTimes[6]) {
-                    desktopView(URLs[7]);
+                    desktopView(URLs[25]);
                 } else if(now < allTimes[7]) {
-                    desktopView(URLs[3]);
-                } else {
-                    System.out.println("BUG");
+                    desktopView(URLs[26]);
+                } else if(now < allTimes[9] && isClass7[3]) {
+                    desktopView(URLs[27]);
+                } else if(now > allTimes[8] && !isClass7[3]) {
+                    desktopView(mkGUI.URLs[0]);
+                } else if(now > allTimes[10] && isClass7[3]) {
+                    desktopView(mkGUI.URLs[0]);
                 }
             }
             case 5 -> {
-                if(now < allTimes[0] ||now > allTimes[8]) {
-                    desktopView(URLs[0]);
+                if(now < allTimes[0]) {
+                    desktopView(mkGUI.URLs[0]);
                 } else if(now < allTimes[1]) {
-                    desktopView(URLs[1]);
+                    desktopView(URLs[28]);
                 } else if(now < allTimes[2]) {
-                    desktopView(URLs[11]);
+                    desktopView(URLs[29]);
                 } else if(now < allTimes[3]) {
-                    desktopView(URLs[9]);
+                    desktopView(URLs[30]);
                 } else if(now < allTimes[5]) {
-                    desktopView(URLs[6]);
+                    desktopView(URLs[31]);
                 } else if(now < allTimes[6]) {
-                    desktopView(URLs[8]);
+                    desktopView(URLs[32]);
                 } else if(now < allTimes[7]) {
-                    desktopView(URLs[13]);
-                } else {
-                    System.out.println("BUG");
+                    desktopView(URLs[33]);
+                } else if(now < allTimes[9] && isClass7[4]) {
+                    desktopView(URLs[35]);
+                } else if(now > allTimes[8] && !isClass7[4]) {
+                    desktopView(mkGUI.URLs[0]);
+                } else if(now > allTimes[10] && isClass7[4]) {
+                    desktopView(mkGUI.URLs[0]);
                 }
             }
             default -> {
@@ -390,7 +423,7 @@ public class manyIF extends JOptionPane {
         try{
             Desktop.getDesktop().browse(new URI(str));
         } catch(IOException | URISyntaxException e) {
-            e.printStackTrace();
+            mkJOptionPane("주소가 잘못 되었습니다", "Notification", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

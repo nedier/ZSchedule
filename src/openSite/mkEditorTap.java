@@ -11,19 +11,17 @@ import java.io.IOException;
 
 public class mkEditorTap {
     static JFrame frame= new JFrame();
-    static boolean[] changeAble = new boolean[15];
+    static boolean[] changeAble = new boolean[mkGUI.URLs.length];
     static JPanel panel = new JPanel(new GridBagLayout());
     static JButton OKButton = new JButton("OK");
     static JButton CancelButton = new JButton("Cancel");
     static GridBagConstraints construe = new GridBagConstraints();
-    static String[] korSubjectNames = {"조종례", "국어", "수학", "영어", "과학B", "역사", "체육", "한문", "음악", "도덕", "가정", "기술", "창체", "과학 A", "스포츠"};
-    static JLabel[] subjectLabels = new JLabel[15];
-    static JTextField[] subjects = new JTextField[15];
-    static JCheckBox[] toChangeAtt = new JCheckBox[15];
+    static JLabel[] subjectLabels = new JLabel[mkGUI.URLs.length];
+    static JTextField[] subjects = new JTextField[mkGUI.URLs.length];
+    static JCheckBox[] toChangeAtt = new JCheckBox[mkGUI.URLs.length];
     static File file = new File("C:\\Temp\\ZSchedule\\files\\saveConfig.xml");
 
-    public static void mkEditor(String[] URLs, File saveConfig, String txt, String[] subjectNames, boolean AttAble) throws ParserConfigurationException, IOException, SAXException {
-        frame.setTitle("link edit");
+    public static void mkEditor(String[] URLs, File saveConfig, String txt, String[] subjectNames, String[] korSubjectNames, boolean AttAble) throws ParserConfigurationException, IOException, SAXException {
         construe.insets = new Insets(5, 5, 5, 5);
         construe.anchor = GridBagConstraints.CENTER;
         construe.gridx=0;

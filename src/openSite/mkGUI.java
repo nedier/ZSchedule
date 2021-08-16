@@ -8,6 +8,7 @@ import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.HashMap;
 
 public class mkGUI extends JFrame {
     static JFrame f = new JFrame("  ZSchedule ver 0.0.3");
@@ -19,6 +20,7 @@ public class mkGUI extends JFrame {
     static File shortSchoolFile = new File("C:\\Temp\\ZSchedule\\files\\shortSchool.xml");
     static File ringingFile = new File("C:\\Temp\\ZSchedule\\files\\ringing.wav");
     static File connectTimeFile = new File("C:\\Temp\\ZSchedule\\files\\setting.xml");
+    static File timetableFile = new File("C:\\Temp\\ZSchedule\\files\\timeTable.xml");
     static JLabel lb1 = new JLabel("", SwingConstants.CENTER);
     static JButton classes = new JButton(nowClassBasic);
     static JToolBar bar = new JToolBar();
@@ -26,32 +28,41 @@ public class mkGUI extends JFrame {
     static JMenuBar mb = new JMenuBar();
     static JMenu editMenu = new JMenu("Edit");
     static JMenu settingMenu = new JMenu("Setting");
-    static JMenu edit = new JMenu("링크");
+    static JMenuItem edit = new JMenu("링크");
     static JMenu shortDay = new JMenu("수업시간");
-    static JMenu alarmTime = new JMenu("기능");
+    static JMenuItem alarmTime = new JMenu("기능");
     static JMenuItem shortDayBreakTime = new JMenuItem("쉬는시간");
     static JMenuItem shortDayStudyTime = new JMenuItem("수업시간");
-    static String[] URLs = new String[15];
+    static String[] URLs = new String[16];
     static boolean[] changeAble = new boolean[URLs.length];
-    static String[] subjectNames = {"MeetEnd", "Kor", "Math", "Eng", "SinceB", "History", "PE", "Chin", "Music", "Moral", "Home", "Techno", "CEA", "SinceA", "Sports"};
+    static String[] subjectNames = {"MeetEnd", "Kor", "Math", "Eng", "SinceB", "History", "PE", "Chin", "Music", "Moral", "Home", "Techno", "CEA", "SinceA", "Sports", "Art"};
+    static String[] korSubjectNames = {"조종례", "국어", "수학", "영어", "과학B", "역사", "체육", "한문", "음악", "도덕", "가정", "기술", "창체", "과학A", "스포츠", "협예"};
+    static String[] timetable = new String[35];
+    static String[][] timetable2D = new String[5][7];
+    static String[] timetableNode = new String[35];
     static String[] times = new String[2]; // break,study
     static int connectTime;
     static MenuItem openItem = new MenuItem("Open");
     static MenuItem hideItem = new MenuItem("Hide");
     static MenuItem exitItem = new MenuItem("Exit");
-    final static PopupMenu popup = new PopupMenu();
+    static PopupMenu popup = new PopupMenu();
     static Thread thread = new Thread(new ThreadWithRunnable());
+    static HashMap<String, String> nameURL = new HashMap<>();
 
     public mkGUI() throws ParserConfigurationException, IOException, SAXException, AWTException {
+        for (int i = 0; i < timetable.length; i++) {
+            timetableNode[i] = "t"+ i;
+            XMLManage.XMLReader(timetableFile.getPath(), timetable, i);
+        }
+        timetable2D = mk2DArr(timetable, timetable2D.length, timetable2D[0].length);
         connectTime = Integer.parseInt(XMLManage.XMLReader(connectTimeFile.getPath(), 0));
         for (int i = 0; i < times.length; i++) {
             XMLManage.XMLReader(shortSchoolFile.getPath(), times, i);
-            System.out.println(times[i]);
         }
-        new Sound(ringingFile);
         for (int i = 0; i < URLs.length; i++) {
             changeAble[i] = Boolean.parseBoolean(XMLManage.XMLReader(saveConfig.getPath(), URLs, i));
             XMLManage.XMLReader(saveConfig.getPath(), URLs, i);
+            nameURL.put(korSubjectNames[i], URLs[i]);
         }
         if(!fileRead(file).equals(Integer.toString(temp1.date))) {
             for (int i = 0; i < changeAble.length; i++) {
@@ -59,9 +70,10 @@ public class mkGUI extends JFrame {
             }
             BufferWriteTry(Integer.toString(temp1.date), file);
         }
+        new DragPanel(timetableFile, korSubjectNames, "timetable", timetableNode, timetable);
         setFrameOptions(f);
         TrayDemo.TrayDemoDefault();
-        new manyIF(connectTime);
+        new manyIF(connectTime, timetable, nameURL);
         if(autoLinking.isSelected()) {
             thread.start();
         }
@@ -174,11 +186,48 @@ public class mkGUI extends JFrame {
         f.setSize(temp1.SCREEN_W, temp1.SCREEN_H);
         f.setLocationRelativeTo(null);
         f.setResizable(false);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         f.setLayout(null);
         f.getContentPane().setBackground(new Color(245, 245, 245, 255));
         f.setJMenuBar(mb);
         f.setVisible(true);
+        f.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+            @Override
+            public void windowClosing(WindowEvent e) {
+                for (String s : timetable) {
+                    if (s.equals("")) {
+                        if (JOptionPane.showConfirmDialog(null,
+                                " 현재 시간표 설정값이 불완전 합니다.\n 계속 진행하시겠습니까? (오류발생 가능)",
+                                "Notification", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
+                            System.exit(0);
+                        }
+                    }
+                }
+            }
+            @Override
+            public void windowClosed(WindowEvent e) {}
+            @Override
+            public void windowIconified(WindowEvent e) {}
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+            @Override
+            public void windowActivated(WindowEvent e) {}
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
+    }
+    public static String[][] mk2DArr(String[] Arr, int i, int j) {
+        int sum = 0;
+        String[][] Arr2 = new String[i][j];
+        for (int k = 0; k < i; k++) {
+            for (int l = 0; l < j; l++) {
+                Arr2[k][l] = Arr[sum];
+                sum++;
+            }
+        }
+        return Arr2;
     }
     public static void shortSchoolXmlWrite() {
         try {
@@ -219,11 +268,11 @@ public class mkGUI extends JFrame {
         @Override
         public void mousePressed(MouseEvent e){
             if(e.getSource() == classes) {
-                manyIF.manyIFNowClass(URLs);
+                manyIF.manyIFNowClass();
                 System.exit(0);
             } else if(e.getSource() == edit) {
             try {
-                mkEditorTap.mkEditor(URLs, saveConfig, "saveConfig", subjectNames, true);
+                mkEditorTap.mkEditor(URLs, saveConfig, "saveConfig", subjectNames, korSubjectNames, true);
             } catch (ParserConfigurationException | SAXException | IOException e1) {
                 e1.printStackTrace();
             }
