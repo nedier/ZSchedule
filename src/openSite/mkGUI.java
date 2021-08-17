@@ -313,9 +313,33 @@ public class mkGUI extends JFrame {
             } else if(e.getSource() == timetableMenu) {
                 new DragPanel(timetableFile, korSubjectNames, "timetable", timetableNode, timetable);
             } else if(e.getSource() == linkEditFile) {
-                saveConfig = new FileChooser().fileChooser(saveConfig);
+                String s = new FileChooser().fileChooser(saveConfig).getPath();
+                for (int i = 0; i < URLs.length; i++) {
+                    try {
+                        XMLManage.XMLReader(s, URLs, i);
+                    } catch (ParserConfigurationException | SAXException | IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                try {
+                    XMLManage.XMLWriter(saveConfig, "saveConfig", subjectNames, URLs, true, changeAble);
+                } catch (ParserConfigurationException | TransformerException e1) {
+                    e1.printStackTrace();
+                }
             } else if(e.getSource() == timetableEditFile) {
-                timetableFile = new FileChooser().fileChooser(timetableFile);
+                String s = new FileChooser().fileChooser(timetableFile).getPath();
+                for (int i = 0; i < timetable.length; i++) {
+                    try {
+                        XMLManage.XMLReader(s, timetable, i);
+                    } catch (ParserConfigurationException | SAXException | IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                try {
+                    XMLManage.XMLWriter(timetableFile, "timetable", timetableNode, timetable, false, null);
+                } catch (ParserConfigurationException | TransformerException e1) {
+                    e1.printStackTrace();
+                }
             }
         }
     }
