@@ -307,7 +307,7 @@ public class mkGUI extends JFrame {
         @Override
         public void run() {
             while (true){
-                if(manyIF.autoLinkingIF(URLs, connectTime)) {
+                if(manyIF.autoLinkingIF()) {
                     break;
                 }
             }
