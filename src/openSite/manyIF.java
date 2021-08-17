@@ -481,7 +481,7 @@ public class manyIF extends JOptionPane {
         try{
             Desktop.getDesktop().browse(new URI(str));
         } catch(IOException | URISyntaxException e) {
-            mkJOptionPane("주소가 잘못 되었습니다", "Notification", JOptionPane.ERROR_MESSAGE);
+            mkJOptionPane("주소가 잘못되었습니다", "Notification", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

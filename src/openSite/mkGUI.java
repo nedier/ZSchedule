@@ -28,9 +28,10 @@ public class mkGUI extends JFrame {
     static JMenuBar mb = new JMenuBar();
     static JMenu editMenu = new JMenu("Edit");
     static JMenu settingMenu = new JMenu("Setting");
-    static JMenuItem edit = new JMenu("링크");
+    static JMenuItem edit = new JMenuItem("링크");
     static JMenu shortDay = new JMenu("수업시간");
-    static JMenuItem alarmTime = new JMenu("기능");
+    static JMenuItem alarmTime = new JMenuItem("알림");
+    static JMenuItem timetableMenu = new JMenuItem("시간표");
     static JMenuItem shortDayBreakTime = new JMenuItem("쉬는시간");
     static JMenuItem shortDayStudyTime = new JMenuItem("수업시간");
     static String[] URLs = new String[16];
@@ -70,7 +71,6 @@ public class mkGUI extends JFrame {
             }
             BufferWriteTry(Integer.toString(temp1.date), file);
         }
-        new DragPanel(timetableFile, korSubjectNames, "timetable", timetableNode, timetable);
         setFrameOptions(f);
         TrayDemo.TrayDemoDefault();
         new manyIF(connectTime, timetable, nameURL);
@@ -152,22 +152,25 @@ public class mkGUI extends JFrame {
         return str;
     }
     public static void setFrameOptions(JFrame f) {
-        shortDay.setMargin(new Insets(2, -25, 2, 2));
-        edit.setMargin(new Insets(2, -25, 2, 2));
-        shortDayBreakTime.setMargin(new Insets(2, -25, 2, 2));
-        shortDayStudyTime.setMargin(new Insets(2, -25, 2, 2));
-        alarmTime.setMargin(new Insets(2, -25, 2, 2));
+        shortDay.setMargin(new Insets(2, -25, 2, 10));
+        edit.setMargin(new Insets(2, -25, 2, 10));
+        shortDayBreakTime.setMargin(new Insets(2, -25, 2, 10));
+        shortDayStudyTime.setMargin(new Insets(2, -25, 2, 10));
+        alarmTime.setMargin(new Insets(2, -25, 2, 10));
+        timetableMenu.setMargin(new Insets(2, -25, 2, 10));
         shortDay.add(shortDayBreakTime);
         shortDay.add(shortDayStudyTime);
         editMenu.add(edit);
         editMenu.add(shortDay);
         settingMenu.add(alarmTime);
+        settingMenu.add(timetableMenu);
         mb.add(editMenu);
         mb.add(settingMenu);
         edit.addMouseListener(new MouseEvents());
         shortDayBreakTime.addMouseListener(new MouseEvents());
         shortDayStudyTime.addMouseListener(new MouseEvents());
         alarmTime.addMouseListener(new MouseEvents());
+        timetableMenu.addMouseListener(new MouseEvents());
         ButtonDefaultSet(140, 160, 350, 40, classes, "linking");
         lb1.setFont(new Font("", Font.PLAIN, 50));
         manyIF.nowClass(lb1);
@@ -196,14 +199,19 @@ public class mkGUI extends JFrame {
             public void windowOpened(WindowEvent e) {}
             @Override
             public void windowClosing(WindowEvent e) {
+                boolean b = true;
                 for (String s : timetable) {
                     if (s.equals("")) {
+                        b = false;
                         if (JOptionPane.showConfirmDialog(null,
                                 " 현재 시간표 설정값이 불완전 합니다.\n 계속 진행하시겠습니까? (오류발생 가능)",
                                 "Notification", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
                             System.exit(0);
                         }
                     }
+                }
+                if(b) {
+                    System.exit(0);
                 }
             }
             @Override
@@ -286,6 +294,8 @@ public class mkGUI extends JFrame {
                 restart();
             } else if(e.getSource() == alarmTime) {
                 mkSettingTap.mkSetting(connectTime, connectTimeFile);
+            } else if(e.getSource() == timetableMenu) {
+                new DragPanel(timetableFile, korSubjectNames, "timetable", timetableNode, timetable);
             }
         }
     }
