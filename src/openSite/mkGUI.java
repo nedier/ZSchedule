@@ -29,7 +29,7 @@ public class mkGUI extends JFrame {
     static JMenu editMenu = new JMenu("Edit");
     static JMenu settingMenu = new JMenu("Setting");
     static JMenuItem edit = new JMenuItem("링크");
-    static JMenu shortDay = new JMenu("수업시간");
+    static JMenu shortDay = new JMenu("단축수업");
     static JMenu filesChoose = new JMenu("파일");
     static JMenuItem alarmTime = new JMenuItem("알림");
     static JMenuItem timetableMenu = new JMenuItem("시간표");
@@ -39,8 +39,8 @@ public class mkGUI extends JFrame {
     static JMenuItem timetableEditFile = new JMenuItem("시간표 파일");
     static String[] URLs = new String[16];
     static boolean[] changeAble = new boolean[URLs.length];
-    static String[] subjectNames = {"MeetEnd", "Kor", "Math", "Eng", "SinceB", "History", "PE", "Chin", "Music", "Moral", "Home", "Techno", "CEA", "SinceA", "Sports", "Art"};
-    static String[] korSubjectNames = {"조종례", "국어", "수학", "영어", "과학B", "역사", "체육", "한문", "음악", "도덕", "가정", "기술", "창체", "과학A", "스포츠", "협예"};
+    static String[] subjectNames = {"MeetEnd", "Kor", "Math", "Eng", "SinceB", "History", "PE", "Chin", "Music", "Moral", "Home", "Techno", "CEA", "SinceA", "Sports", "Music2"};
+    static String[] korSubjectNames = {"조종례", "국어", "수학", "영어", "과학B", "역사", "체육", "한문", "음악", "도덕", "가정", "기술", "창체", "과학A", "스포츠", "음악2"};
     static String[] timetable = new String[35];
     static String[][] timetable2D = new String[5][7];
     static String[] timetableNode = new String[35];
@@ -69,6 +69,9 @@ public class mkGUI extends JFrame {
             nameURL.put(korSubjectNames[i], URLs[i]);
         }
         if(!fileRead(file).equals(Integer.toString(temp1.date))) {
+            times[0] = "15";
+            times[1] = "40";
+            shortSchoolXmlWrite();
             for (int i = 0; i < changeAble.length; i++) {
                 manyIF.manyIFToday(changeAble[i], i, URLs);
             }

@@ -72,7 +72,7 @@ public class DragPanel extends JFrame {
 
         f.setLocationRelativeTo(null);
         f.setResizable(false);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         f.pack();
         f.setVisible(true);
         OKButton.addActionListener(e -> {
@@ -100,7 +100,7 @@ public class DragPanel extends JFrame {
                 mkGUI.mkJOptionPane("7교시 이외의 값들은 채워져 있어야 합니다.", "Notification", JOptionPane.ERROR_MESSAGE);
             }
         });
-        CancelButton.addActionListener(e -> f.dispose());
+        CancelButton.addActionListener(e -> mkGUI.restart());
     }
     static class ListTransferHandler extends TransferHandler {
         @Override
