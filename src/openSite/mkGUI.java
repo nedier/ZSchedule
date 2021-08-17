@@ -30,10 +30,13 @@ public class mkGUI extends JFrame {
     static JMenu settingMenu = new JMenu("Setting");
     static JMenuItem edit = new JMenuItem("링크");
     static JMenu shortDay = new JMenu("수업시간");
+    static JMenu filesChoose = new JMenu("파일");
     static JMenuItem alarmTime = new JMenuItem("알림");
     static JMenuItem timetableMenu = new JMenuItem("시간표");
     static JMenuItem shortDayBreakTime = new JMenuItem("쉬는시간");
     static JMenuItem shortDayStudyTime = new JMenuItem("수업시간");
+    static JMenuItem linkEditFile = new JMenuItem("링크 파일");
+    static JMenuItem timetableEditFile = new JMenuItem("시간표 파일");
     static String[] URLs = new String[16];
     static boolean[] changeAble = new boolean[URLs.length];
     static String[] subjectNames = {"MeetEnd", "Kor", "Math", "Eng", "SinceB", "History", "PE", "Chin", "Music", "Moral", "Home", "Techno", "CEA", "SinceA", "Sports", "Art"};
@@ -158,12 +161,18 @@ public class mkGUI extends JFrame {
         shortDayStudyTime.setMargin(new Insets(2, -25, 2, 10));
         alarmTime.setMargin(new Insets(2, -25, 2, 10));
         timetableMenu.setMargin(new Insets(2, -25, 2, 10));
+        filesChoose.setMargin(new Insets(2, -25, 2, 10));
+        linkEditFile.setMargin(new Insets(2, -25, 2, 10));
+        timetableEditFile.setMargin(new Insets(2, -25, 2, 10));
+        filesChoose.add(linkEditFile);
+        filesChoose.add(timetableEditFile);
         shortDay.add(shortDayBreakTime);
         shortDay.add(shortDayStudyTime);
         editMenu.add(edit);
         editMenu.add(shortDay);
-        settingMenu.add(alarmTime);
-        settingMenu.add(timetableMenu);
+        editMenu.add(alarmTime);
+        editMenu.add(timetableMenu);
+        settingMenu.add(filesChoose);
         mb.add(editMenu);
         mb.add(settingMenu);
         edit.addMouseListener(new MouseEvents());
@@ -171,6 +180,8 @@ public class mkGUI extends JFrame {
         shortDayStudyTime.addMouseListener(new MouseEvents());
         alarmTime.addMouseListener(new MouseEvents());
         timetableMenu.addMouseListener(new MouseEvents());
+        linkEditFile.addMouseListener(new MouseEvents());
+        timetableEditFile.addMouseListener(new MouseEvents());
         ButtonDefaultSet(140, 160, 350, 40, classes, "linking");
         lb1.setFont(new Font("", Font.PLAIN, 50));
         manyIF.nowClass(lb1);
@@ -200,13 +211,15 @@ public class mkGUI extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 boolean b = true;
-                for (String s : timetable) {
-                    if (s.equals("")) {
-                        b = false;
-                        if (JOptionPane.showConfirmDialog(null,
-                                " 현재 시간표 설정값이 불완전 합니다.\n 계속 진행하시겠습니까? (오류발생 가능)",
-                                "Notification", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
-                            System.exit(0);
+                for (String[] strings : timetable2D) {
+                    for (int j = 0; j < timetable2D[0].length; j++) {
+                        if (strings[j].equals("") && !(j == 6)) {
+                            b = false;
+                            if (JOptionPane.showConfirmDialog(null,
+                                    " 현재 시간표 설정값이 불완전 합니다.\n 계속 진행하시겠습니까? (오류발생 가능)",
+                                    "Notification", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
+                                System.exit(0);
+                            }
                         }
                     }
                 }
@@ -296,6 +309,10 @@ public class mkGUI extends JFrame {
                 mkSettingTap.mkSetting(connectTime, connectTimeFile);
             } else if(e.getSource() == timetableMenu) {
                 new DragPanel(timetableFile, korSubjectNames, "timetable", timetableNode, timetable);
+            } else if(e.getSource() == linkEditFile) {
+                saveConfig = new FileChooser().fileChooser(saveConfig);
+            } else if(e.getSource() == timetableEditFile) {
+                timetableFile = new FileChooser().fileChooser(timetableFile);
             }
         }
     }
